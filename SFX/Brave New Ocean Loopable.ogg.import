@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cloc4wa06hfsl"
+path="res://.godot/imported/Brave New Ocean Loopable.ogg-891533668626a89a761dd94a36997e92.oggvorbisstr"
+
+[deps]
+
+source_file="res://SFX/Brave New Ocean Loopable.ogg"
+dest_files=["res://.godot/imported/Brave New Ocean Loopable.ogg-891533668626a89a761dd94a36997e92.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

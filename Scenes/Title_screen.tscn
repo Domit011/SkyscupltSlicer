@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdnkhgt65tjn5"]
+[gd_scene load_steps=4 format=3 uid="uid://bdnkhgt65tjn5"]
 
 [ext_resource type="Script" uid="uid://hb1tk1nra5be" path="res://Scripts/button.gd" id="1_glfsf"]
+[ext_resource type="Texture2D" uid="uid://bqlxmux6cwfri" path="res://Sprites/backgrounds/nightbackgroundwithmoon.png" id="1_s30q0"]
 [ext_resource type="Texture2D" uid="uid://uwdflyo2gejo" path="res://Sprites/UI/banner_classic_curtain.png" id="2_sxg3m"]
 
 [node name="Control" type="Control"]
@@ -13,6 +14,16 @@ grow_vertical = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = -1.0
+offset_right = 1159.0
+offset_bottom = 768.0
+texture = ExtResource("1_s30q0")
+
+[node name="BannerClassicCurtain" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(543, 133)
+texture = ExtResource("2_sxg3m")
+
 [node name="PlayButton" type="Button" parent="CanvasLayer"]
 offset_left = 454.0
 offset_top = 337.0
@@ -20,9 +31,5 @@ offset_right = 618.0
 offset_bottom = 461.0
 text = "Play"
 script = ExtResource("1_glfsf")
-
-[node name="BannerClassicCurtain" type="Sprite2D" parent="."]
-position = Vector2(543, 133)
-texture = ExtResource("2_sxg3m")
 
 [connection signal="pressed" from="CanvasLayer/PlayButton" to="CanvasLayer/PlayButton" method="_on_pressed"]
