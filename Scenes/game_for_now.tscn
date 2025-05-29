@@ -10,4 +10,4 @@ position = Vector2(612, 282)
 texture = ExtResource("1_io3oi")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_m0g8t")]
-position = Vector2(445, 239)
+position = Vector2(580, 346)

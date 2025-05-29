@@ -1,63 +1,66 @@
 [gd_scene load_steps=17 format=3 uid="uid://c6vy8sbupra47"]
 
-[ext_resource type="Script" uid="uid://dfrif0jgsyw2c" path="res://Player.gd" id="1_rpqav"]
+[ext_resource type="Script" uid="uid://dfrif0jgsyw2c" path="res://Scripts/Player.gd" id="1_rpqav"]
 [ext_resource type="Texture2D" uid="uid://can8g5aadjtmd" path="res://Sprites/Hot air Balloon/!$Ballon Flight.png" id="2_kyqiw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_88kja"]
 radius = 65.0
 height = 216.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gntrk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyqiw"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(0, 0, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dewec"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gntrk"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(144, 0, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5ixxa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dewec"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(288, 0, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nn08x"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ixxa"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(0, 240, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_52ee3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nn08x"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(144, 240, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bhhdu"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_52ee3"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(288, 240, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_megsn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhhdu"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(0, 480, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yoq75"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_megsn"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(144, 480, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ksbbd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yoq75"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(288, 480, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_glx4g"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksbbd"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(0, 720, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_miouo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_glx4g"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(144, 720, 144, 240)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o3h8g"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_miouo"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(288, 720, 144, 240)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1e7my"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyqiw")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gntrk")
 }, {
@@ -90,12 +93,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_miouo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o3h8g")
 }],
 "loop": true,
-"name": &"default",
+"name": &"new_animation",
 "speed": 5.0
 }]
 
@@ -107,7 +107,6 @@ shape = SubResource("CapsuleShape2D_88kja")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1e7my")
-frame = 3
-frame_progress = 0.701677
+animation = &"new_animation"
 
 [node name="Camera2D" type="Camera2D" parent="."]
