@@ -9,7 +9,7 @@ func _physics_process(delta: float) -> void:
 	var velocity = Vector2.ZERO
 	
 	# Get left-right input
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("Left", "Right")
 	velocity.x = direction * move_speed
 	
 	# Apply constant upward movement
