@@ -53,8 +53,7 @@ func reset_game() -> void:
 	update_score_display()
 	# Reset player position
 	player.position = Vector2(0,0)
-	# Reset obstacle position
-	obstacle.position = Vector2(100, 0)
+
 	# Hide death screen
 	death_screen.visible = false
 
@@ -66,6 +65,11 @@ func game_over() -> void:
 	is_game_over = true
 	# Save score to leaderboard
 	save_to_leaderboard(int(score))
+		# Position deathscreen at top middle
+	var viewport_size = get_viewport_rect().size
+	death_screen.position = Vector2(viewport_size.x / 2, 20)  # 20 pixels from top
+	# Center the label horizontally by adjusting pivot
+	death_screen.pivot_offset = Vector2(death_screen.size.x / 2, 0)  # Center on x-axis
 	# Show death screen
 	final_score_label.text = "Final Score: %d" % int(score)
 	update_leaderboard_display()
