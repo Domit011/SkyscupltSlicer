@@ -53,7 +53,7 @@ func reset_game() -> void:
 	update_score_display()
 	# Reset player position
 	player.position = Vector2(0,0)
-
+	score_label.visible = true
 	# Hide death screen
 	death_screen.visible = false
 
@@ -74,6 +74,8 @@ func game_over() -> void:
 	final_score_label.text = "Final Score: %d" % int(score)
 	update_leaderboard_display()
 	death_screen.visible = true
+	score_label.visible = false
+	final_score_label.visible = false
 
 func load_leaderboard() -> void:
 	var file = FileAccess.open(LEADERBOARD_FILE, FileAccess.READ)

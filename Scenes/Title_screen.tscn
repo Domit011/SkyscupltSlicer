@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bqlxmux6cwfri" path="res://Sprites/backgrounds/nightbackgroundwithmoon.png" id="1_s30q0"]
 [ext_resource type="FontFile" uid="uid://b1s7se5rvlegj" path="res://Fonts/kingthings-bloone-font/KingthingsBloone-3926.ttf" id="2_w38ri"]
 [ext_resource type="Script" uid="uid://buxqndjhqu17b" path="res://Scripts/play_button.gd" id="3_s30q0"]
-[ext_resource type="Script" uid="uid://t5xk8ryq2vx3" path="res://Scripts/Leaderboard_button.gd" id="4_wou8e"]
+[ext_resource type="Script" uid="uid://bcfd72bx2w44t" path="res://Scripts/Leadboard_button.gd" id="4_wou8e"]
 
 [sub_resource type="Theme" id="Theme_75exb"]
 
@@ -40,28 +40,10 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("3_s30q0")
 
-[node name="leaderboard" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="UI/VBoxContainer"]
 layout_mode = 2
-offset_left = 502.0
-offset_top = 598.557
-offset_right = 605.0
-offset_bottom = 629.557
-text = "leaderboard"
+text = "Leaderboard"
 script = ExtResource("4_wou8e")
 
-[node name="UI" type="CanvasLayer" parent="Button"]
-
-[node name="leaderboard" type="Control" parent="Button/UI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [connection signal="pressed" from="UI/VBoxContainer/PlayButton" to="UI/VBoxContainer/PlayButton" method="_on_pressed"]
-[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Button" to="UI/VBoxContainer/Button" method="_on_pressed"]
