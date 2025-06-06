@@ -15,11 +15,14 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var final_score_label: Label = $UI/DeathScreen/FinalScoreLabel
 @onready var leaderboard_label: Label = $UI/DeathScreen/LeaderboardLabel
 @onready var restart_button: Button = $UI/DeathScreen/RestartButton
+@onready var section_manager: Node2D = $SectionManager
 
 # Leaderboard data
 var leaderboard: Array = []
 
 func _ready() -> void:
+	#unpause game
+	get_tree().paused = false
 	# Initialize game state
 	reset_game()
 	# Load leaderboard from file
@@ -47,21 +50,22 @@ func update_score_display() -> void:
 	score_label.text = "Score: %d" % int(score)
 
 func reset_game() -> void:
+		#unpause game
+	get_tree().paused = false
 	# Reset score and game state
 	score = 0.0
 	is_game_over = false
 	update_score_display()
 	# Reset player position
-	player.position = Vector2(0,0)
+	player.position = Vector2(600,-650)
 	score_label.visible = true
 	# Hide death screen
 	death_screen.visible = false
 
-func _on_obstacle_body_entered(body: Node) -> void:
-	if body == player and not is_game_over:
-		game_over()
+
 
 func game_over() -> void:
+	get_tree().paused = true
 	is_game_over = true
 	# Save score to leaderboard
 	save_to_leaderboard(int(score))
@@ -106,4 +110,6 @@ func update_leaderboard_display() -> void:
 	leaderboard_label.text = text
 
 func _on_restart_button_pressed() -> void:
+	section_manager.sections.clear()#unpause game
+	get_tree().paused = false
 	reset_game()

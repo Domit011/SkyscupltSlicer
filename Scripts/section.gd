@@ -1,10 +1,11 @@
 extends Node2D
 
 @export var section_height: float = 600.0
+@onready var obstacle: Node2D = $Obstacles
 
 func _ready():
 	$VisibilityNotifier.screen_exited.connect(_on_screen_exited)
-
+	
 func _on_screen_exited():
 	queue_free() # Despawn when off-screen
 	

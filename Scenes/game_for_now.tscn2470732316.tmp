@@ -16,7 +16,6 @@ script = ExtResource("1_o85vq")
 [node name="SectionManager" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("3_o85vq")
 section_scenes = Array[PackedScene]([ExtResource("4_pk35k"), ExtResource("4_7ph4x")])
-spawn_offset = null
 player = NodePath("../Player")
 
 [node name="Section1" parent="SectionManager" instance=ExtResource("4_7ph4x")]

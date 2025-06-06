@@ -7,7 +7,11 @@ extends Node2D
 var current_top_y: float = 0.0 # Y-position of the topmost section
 var sections: Array[Node] = [] # Active sections
 
+
+
+
 func _ready():
+	sections.clear()
 	if section_scenes.is_empty():
 		push_error("SectionManager: No section scenes assigned in the Inspector!")
 		return
@@ -24,11 +28,10 @@ func _physics_process(delta):
 	if player.position.y < current_top_y + spawn_offset:
 		spawn_section(Vector2(0, current_top_y - get_section_height(section_scenes[0])))
 
-	# Existing spawn logic...
 	
 	# Despawn sections too far below
 	for section in sections.duplicate():
-		if section.position.y > player.position.y + 1000: # Adjust threshold
+		if section.position.y > player.position.y + 300: # Adjust threshold
 				sections.erase(section)
 				section.queue_free()
 
