@@ -17,8 +17,8 @@ texture = ExtResource("2_a7tme")
 [node name="Obstacles" type="Node2D" parent="."]
 scale = Vector2(13.6173, 13.6173)
 
-[node name="Obstacle" type="StaticBody2D" parent="Obstacles"]
-position = Vector2(46.4115, 7.12328)
+[node name="Obstacle" type="StaticBody2D" parent="Obstacles" groups=["Obstacle"]]
+position = Vector2(59.5566, 26.3635)
 scale = Vector2(0.257129, 0.257129)
 
 [node name="Sprite2D" type="Sprite2D" parent="Obstacles/Obstacle"]
@@ -29,8 +29,8 @@ texture = ExtResource("3_7danf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle"]
 shape = SubResource("RectangleShape2D_l8g4o")
 
-[node name="Obstacle2" type="StaticBody2D" parent="Obstacles"]
-position = Vector2(15.9356, 31.0634)
+[node name="Obstacle2" type="StaticBody2D" parent="Obstacles" groups=["Obstacle"]]
+position = Vector2(11.3091, 8.3717)
 scale = Vector2(0.215703, 0.215703)
 
 [node name="Sprite2D" type="Sprite2D" parent="Obstacles/Obstacle2"]

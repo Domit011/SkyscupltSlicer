@@ -1,10 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpos7hdah7g2l"]
+[gd_scene load_steps=6 format=3 uid="uid://bpos7hdah7g2l"]
 
 [ext_resource type="Script" uid="uid://birgik37skaj4" path="res://Scripts/section.gd" id="1_28ggr"]
 [ext_resource type="Texture2D" uid="uid://c73rak7kdt6de" path="res://Sprites/backgrounds/dawnbackground.png" id="2_utugn"]
 [ext_resource type="Texture2D" uid="uid://ijrqj2knseqf" path="res://Sprites/icon.svg" id="3_uowb4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l8g4o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_28ggr"]
 
 [node name="Section1" type="Node2D"]
 script = ExtResource("1_28ggr")
@@ -45,3 +47,6 @@ shape = SubResource("RectangleShape2D_l8g4o")
 position = Vector2(-6911.99, 324.5)
 scale = Vector2(57.6, 32.25)
 rect = Rect2(120, -10, 20, 20)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_28ggr")

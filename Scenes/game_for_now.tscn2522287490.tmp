@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://3ik7djlndy5t"]
+
+[ext_resource type="Texture2D" uid="uid://ijrqj2knseqf" path="res://Sprites/icon.svg" id="1_io3oi"]
+[ext_resource type="Script" uid="uid://bejfkbc7y8m8k" path="res://Scripts/Game.gd" id="1_o85vq"]
+[ext_resource type="PackedScene" uid="uid://c6vy8sbupra47" path="res://Scenes/Player.tscn" id="2_m0g8t"]
+[ext_resource type="Script" uid="uid://bw6odvw5oitr5" path="res://Scripts/HandleSections.gd" id="3_o85vq"]
+[ext_resource type="PackedScene" uid="uid://bpos7hdah7g2l" path="res://Scenes/section_1.tscn" id="4_7ph4x"]
+[ext_resource type="PackedScene" uid="uid://blbhglbc7lp4h" path="res://Scenes/section_2.tscn" id="4_pk35k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gv0ft"]
+size = Vector2(119, 120)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_o85vq")
+
+[node name="SectionManager" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("3_o85vq")
+section_scenes = Array[PackedScene]([ExtResource("4_pk35k"), ExtResource("4_7ph4x")])
+player = NodePath("../Player")
+
+[node name="Section1" parent="SectionManager" instance=ExtResource("4_7ph4x")]
+
+[node name="Section2" parent="SectionManager" instance=ExtResource("4_pk35k")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="DeathScreen" type="Control" parent="UI"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="FinalScoreLabel" type="Label" parent="UI/DeathScreen"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="LeaderboardLabel" type="Label" parent="UI/DeathScreen"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
+
+[node name="RestartButton" type="Button" parent="UI/DeathScreen"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+scale = Vector2(14.9473, 15.0442)
+metadata/_edit_use_anchors_ = true
+
+[node name="Obstacle" type="Area2D" parent="."]
+position = Vector2(242, -315)
+
+[node name="Sprite2D" type="Sprite2D" parent="Obstacle"]
+texture = ExtResource("1_io3oi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
+position = Vector2(0.5, -1)
+shape = SubResource("RectangleShape2D_gv0ft")
+
+[node name="Player" parent="." node_paths=PackedStringArray("game_manager") instance=ExtResource("2_m0g8t")]
+position = Vector2(578, 604)
+game_manager = NodePath("..")
+
+[connection signal="pressed" from="UI/DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]
