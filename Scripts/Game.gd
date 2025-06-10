@@ -15,7 +15,7 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var final_score_label: Label = $UI/DeathScreen/FinalScoreLabel
 @onready var leaderboard_label: Label = $UI/DeathScreen/LeaderboardLabel
 @onready var restart_button: Button = $UI/DeathScreen/RestartButton
-@onready var section_manager: Node2D = $SectionManager
+@onready var section_manager: SectionManager = $SectionManager
 
 # Leaderboard data
 var leaderboard: Array = []
@@ -61,6 +61,7 @@ func reset_game() -> void:
 	score_label.visible = true
 	# Hide death screen
 	death_screen.visible = false
+	section_manager.reset()
 
 
 
