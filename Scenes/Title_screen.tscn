@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdnkhgt65tjn5"]
+[gd_scene load_steps=11 format=3 uid="uid://bdnkhgt65tjn5"]
 
 [ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="1_glfsf"]
+[ext_resource type="FontFile" uid="uid://b1s7se5rvlegj" path="res://Fonts/kingthings-bloone-font/KingthingsBloone-3926.ttf" id="2_wou8e"]
 [ext_resource type="Script" uid="uid://buxqndjhqu17b" path="res://Scripts/play_button.gd" id="3_s30q0"]
 [ext_resource type="Script" uid="uid://bcfd72bx2w44t" path="res://Scripts/Leadboard_button.gd" id="4_wou8e"]
+[ext_resource type="Script" uid="uid://db2cnlofsye1c" path="res://Scripts/settings.gd" id="5_75exb"]
+[ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="5_w38ri"]
+[ext_resource type="Script" uid="uid://b4i2ql75plw3v" path="res://Scripts/Exit_button.gd" id="7_oltrp"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxg3m"]
 texture = ExtResource("1_glfsf")
@@ -14,6 +18,8 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="Theme" id="Theme_w38ri"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -50,7 +56,11 @@ theme_override_constants/separation = 10
 [node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
 theme_override_colors/font_color = Color(0, 0.490384, 0.619483, 1)
+theme_override_colors/font_focus_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
+theme_override_colors/font_pressed_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
+theme_override_fonts/font = ExtResource("2_wou8e")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wd5bn")
@@ -66,7 +76,11 @@ script = ExtResource("3_s30q0")
 [node name="Leaderboard" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
 theme_override_colors/font_color = Color(0, 0.490384, 0.619483, 1)
+theme_override_colors/font_focus_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
+theme_override_colors/font_pressed_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
+theme_override_fonts/font = ExtResource("2_wou8e")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wd5bn")
@@ -82,7 +96,11 @@ script = ExtResource("4_wou8e")
 [node name="Settings" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
 theme_override_colors/font_color = Color(0, 0.490384, 0.619483, 1)
+theme_override_colors/font_focus_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
+theme_override_colors/font_pressed_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
+theme_override_fonts/font = ExtResource("2_wou8e")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wd5bn")
@@ -93,12 +111,50 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_wd5bn")
 text = "Settings"
+script = ExtResource("5_75exb")
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -456.5
+offset_top = 61.0
+offset_right = 456.5
+offset_bottom = 152.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wou8e")
+theme_override_font_sizes/font_size = 69
 text = "Skysculpt slicer"
 
+[node name="exit" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.149
+offset_top = 622.0
+offset_right = 520.0
+offset_bottom = 1045.45
+scale = Vector2(0.0400012, 0.0400012)
+
+[node name="Button" type="Button" parent="exit"]
+layout_mode = 2
+theme = SubResource("Theme_w38ri")
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+icon = ExtResource("5_w38ri")
+flat = true
+script = ExtResource("7_oltrp")
+
 [connection signal="pressed" from="VBoxContainer/Start" to="VBoxContainer/Start" method="_on_pressed"]
-[connection signal="pressed" from="VBoxContainer/Leaderboard" to="VBoxContainer/Start" method="_on_leaderboard_pressed"]
+[connection signal="pressed" from="VBoxContainer/Leaderboard" to="VBoxContainer/Leaderboard" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="VBoxContainer/Settings" method="_on_pressed"]
+[connection signal="pressed" from="exit/Button" to="exit/Button" method="_on_pressed"]

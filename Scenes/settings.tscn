@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://4svaenkjr60g"]
+[gd_scene load_steps=3 format=3 uid="uid://dgmltgq7iwqfe"]
 
-[ext_resource type="Texture2D" uid="uid://bvdpjtxykjt7y" path="res://Sprites/UI/back-arrow-png.png" id="1_26rm0"]
-[ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_1pumy"]
+[ext_resource type="Texture2D" uid="uid://bvdpjtxykjt7y" path="res://Sprites/UI/back-arrow-png.png" id="1_i44u3"]
+[ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_lhmql"]
 
-[node name="Control" type="Control"]
+[node name="Settings" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(0.185908, 0.185908)
@@ -23,8 +22,8 @@ theme_override_colors/font_hover_color = Color(0.18359, 0.18359, 0.18359, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.18359, 0.18359, 0.18359, 1)
 theme_override_colors/font_pressed_color = Color(0.18359, 0.18359, 0.18359, 1)
-icon = ExtResource("1_26rm0")
+icon = ExtResource("1_i44u3")
 flat = true
-script = ExtResource("2_1pumy")
+script = ExtResource("2_lhmql")
 
 [connection signal="pressed" from="VBoxContainer/Button" to="VBoxContainer/Button" method="_on_pressed"]
