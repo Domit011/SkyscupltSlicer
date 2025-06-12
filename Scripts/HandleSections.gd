@@ -1,7 +1,7 @@
 extends Node2D
 class_name SectionManager
 @export var section_scenes: Array[PackedScene] # Array of section scenes
-@export var spawn_offset: float = 100.0 # Distance from top section to spawn next
+@export var spawn_offset: float = 350.0 # Distance from top section to spawn next
 @export var player: Node2D # Reference to player node
 
 var current_top_y: float = 0.0 # Y-position of the topmost section
