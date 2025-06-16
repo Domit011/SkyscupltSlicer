@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://buddhhlqnx11k"]
+
+[ext_resource type="Script" uid="uid://bv2w6kgnt1862" path="res://Scenes/moving_object.gd" id="1_a0fks"]
+[ext_resource type="Texture2D" uid="uid://bhv5urvs842ge" path="res://Sprites/Obstacles/DeWatermark.ai_1750031190211-removebg-preview.png" id="1_jbjhu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jbjhu"]
+size = Vector2(38, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0fks"]
+atlas = ExtResource("1_jbjhu")
+region = Rect2(0, 0, 123, 126)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofb64"]
+atlas = ExtResource("1_jbjhu")
+region = Rect2(123, 0, 123, 126)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io0ql"]
+atlas = ExtResource("1_jbjhu")
+region = Rect2(246, 0, 123, 126)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ov1p1"]
+atlas = ExtResource("1_jbjhu")
+region = Rect2(369, 0, 123, 126)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uj47d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0fks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ofb64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io0ql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ov1p1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ofb64")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_a0fks")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(3, 13)
+shape = SubResource("RectangleShape2D_jbjhu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.579365, 0.579365)
+sprite_frames = SubResource("SpriteFrames_uj47d")
+animation = &"fly"
+autoplay = "fly"
+frame_progress = 0.856944
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(3, 13)
+shape = SubResource("RectangleShape2D_jbjhu")
