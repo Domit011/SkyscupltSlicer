@@ -129,3 +129,4 @@ func _on_restart_button_pressed() -> void:
 func _on_obstacle_body_entered(body: Node2D) -> void:
 	if body == player:
 		game_over()
+		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdnkhgt65tjn5"]
+[gd_scene load_steps=12 format=3 uid="uid://bdnkhgt65tjn5"]
 
 [ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="1_glfsf"]
 [ext_resource type="FontFile" uid="uid://b1s7se5rvlegj" path="res://Fonts/kingthings-bloone-font/KingthingsBloone-3926.ttf" id="2_wou8e"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://db2cnlofsye1c" path="res://Scripts/settings.gd" id="5_75exb"]
 [ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="5_w38ri"]
 [ext_resource type="Script" uid="uid://b4i2ql75plw3v" path="res://Scripts/Exit_button.gd" id="7_oltrp"]
+[ext_resource type="AudioStream" uid="uid://20odx86cypp4" path="res://SFX/Crystal Cavern.ogg" id="8_67b70"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxg3m"]
 texture = ExtResource("1_glfsf")
@@ -153,6 +154,11 @@ theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 icon = ExtResource("5_w38ri")
 flat = true
 script = ExtResource("7_oltrp")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_67b70")
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="VBoxContainer/Start" to="VBoxContainer/Start" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Leaderboard" to="VBoxContainer/Leaderboard" method="_on_pressed"]

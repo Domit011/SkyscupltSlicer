@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://3ik7djlndy5t"]
+[gd_scene load_steps=9 format=3 uid="uid://3ik7djlndy5t"]
 
 [ext_resource type="Script" uid="uid://bejfkbc7y8m8k" path="res://Scripts/Game.gd" id="1_o85vq"]
 [ext_resource type="PackedScene" uid="uid://c6vy8sbupra47" path="res://Scenes/Player.tscn" id="2_m0g8t"]
 [ext_resource type="Script" uid="uid://bw6odvw5oitr5" path="res://Scripts/HandleSections.gd" id="3_o85vq"]
 [ext_resource type="PackedScene" uid="uid://bpos7hdah7g2l" path="res://Scenes/section_1.tscn" id="4_7ph4x"]
 [ext_resource type="PackedScene" uid="uid://blbhglbc7lp4h" path="res://Scenes/section_2.tscn" id="4_pk35k"]
+[ext_resource type="AudioStream" uid="uid://bnob64tsu4wcq" path="res://SFX/trance_dungeon_bpm130.mp3" id="7_b5lau"]
 [ext_resource type="PackedScene" uid="uid://ds5xqbc3v57mo" path="res://Scenes/pause_menu.tscn" id="7_ftk8y"]
-[ext_resource type="AudioStream" uid="uid://c2fwnwmrmu4di" path="res://SFX/wind1.wav" id="8_b5lau"]
+
+[sub_resource type="GDScript" id="GDScript_ftk8y"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_o85vq")
@@ -63,8 +65,13 @@ game_manager = NodePath("..")
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_ftk8y")]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_b5lau")
+stream = ExtResource("7_b5lau")
+autoplay = true
+parameters/looping = true
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="QuestManager" type="Node" parent="."]
+script = SubResource("GDScript_ftk8y")
 
 [connection signal="pressed" from="UI/DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]

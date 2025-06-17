@@ -15,6 +15,10 @@ run/main_scene="uid://bdnkhgt65tjn5"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Sprites/icon.svg"
 
+[autoload]
+
+QuestManager="*res://Scripts/QuestManager.gd"
+
 [global_group]
 
 Obstacle=""

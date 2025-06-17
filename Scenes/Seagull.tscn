@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://buddhhlqnx11k"]
 
-[ext_resource type="Script" uid="uid://bv2w6kgnt1862" path="res://Scenes/moving_object.gd" id="1_a0fks"]
+[ext_resource type="Script" uid="uid://bv2w6kgnt1862" path="res://Scripts/moving_object.gd" id="1_a0fks"]
 [ext_resource type="Texture2D" uid="uid://bhv5urvs842ge" path="res://Sprites/Obstacles/DeWatermark.ai_1750031190211-removebg-preview.png" id="1_jbjhu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jbjhu"]

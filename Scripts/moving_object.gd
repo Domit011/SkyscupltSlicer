@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-@export var min_speed: float = -50.0  # Minimum horizontal speed
-@export var max_speed: float = -150.0  # Maximum horizontal speed
+@export var min_speed: float = -100.0  # Minimum horizontal speed
+@export var max_speed: float = -125.0  # Maximum horizontal speed
 @export var speed_change_interval: float = 1.0  # How often to change speed (seconds)
 @export var sine_amplitude: float = 50.0  # How far the sine wave deviates vertically
 @export var sine_frequency: float = 2.0  # How fast the sine wave oscillates
