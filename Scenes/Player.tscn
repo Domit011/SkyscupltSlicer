@@ -3,10 +3,6 @@
 [ext_resource type="Script" uid="uid://dfrif0jgsyw2c" path="res://Scripts/Player.gd" id="1_rpqav"]
 [ext_resource type="Texture2D" uid="uid://can8g5aadjtmd" path="res://Sprites/Hot air Balloon/!$Ballon Flight.png" id="2_kyqiw"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_88kja"]
-radius = 28.125
-height = 62.5
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_kyqiw"]
 atlas = ExtResource("2_kyqiw")
 region = Rect2(0, 0, 144, 240)
@@ -22,6 +18,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_88kja"]
+radius = 28.125
+height = 62.5
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 65.9219
 
@@ -32,14 +32,14 @@ radius = 35.6305
 scale = Vector2(0.32, 0.32)
 script = ExtResource("1_rpqav")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_88kja")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1e7my")
 animation = &"Idle"
 autoplay = "Idle"
 frame_progress = 0.960472
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_88kja")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_left = 0

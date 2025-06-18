@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # Movement variables
-@export var move_speed: float = 200.0 # Left-right speed in pixels/second
+@export var move_speed: float = 400.0 # Left-right speed in pixels/second
 @export var upward_speed: float = 100.0 # Upward speed in pixels/second
 @export var game_manager : Node2D
 func _physics_process(delta: float) -> void:

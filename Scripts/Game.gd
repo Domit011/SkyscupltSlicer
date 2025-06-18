@@ -13,8 +13,13 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var leaderboard_label: Label = $UI/DeathScreen/LeaderboardLabel
 @onready var restart_button: Button = $UI/DeathScreen/RestartButton
 @onready var section_manager: SectionManager = $SectionManager
+
 # Leaderboard data
 var leaderboard: Array = []
+var acceptable_input = ["ui_left","ui_right","ui_down","ui_up"]
+#temp
+var input_array : Array[String] = []
+var current_craft_request = ["right","up","left","down"]
 
 func _ready() -> void:
 	# Unpause game
@@ -130,3 +135,33 @@ func _on_obstacle_body_entered(body: Node2D) -> void:
 	if body == player:
 		game_over()
 		
+		
+func _input(event: InputEvent) -> void:
+	var input_pos = input_array.size()
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		if event.physical_keycode not in [KEY_UP,KEY_DOWN,KEY_RIGHT,KEY_LEFT]:
+			return
+		if event.is_action_pressed("ui_up"):
+			if current_craft_request[input_pos] == "up":
+				print("up")
+				input_array.append("up")
+		elif event.is_action_pressed("ui_down"):
+			if current_craft_request[input_pos] == "down":
+				input_array.append("down")
+		elif event.is_action_pressed("ui_left"):
+			if current_craft_request[input_pos] == "left":
+				input_array.append("left")
+		elif event.is_action_pressed("ui_right"):
+			if current_craft_request[input_pos] == "right":
+				input_array.append("right")
+		else:
+			input_array.clear()
+			print("clearing")
+		
+		if input_array == current_craft_request:
+			print("Complete")
+			input_array.clear()
+		else:
+			print(input_array)
+			
+			
