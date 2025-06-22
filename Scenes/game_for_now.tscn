@@ -1,14 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://3ik7djlndy5t"]
+[gd_scene load_steps=21 format=3 uid="uid://3ik7djlndy5t"]
 
 [ext_resource type="Script" uid="uid://bejfkbc7y8m8k" path="res://Scripts/Game.gd" id="1_o85vq"]
+[ext_resource type="Texture2D" uid="uid://uxy78dvyfp65" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (White)/tile_0438.png" id="2_hhruo"]
 [ext_resource type="PackedScene" uid="uid://c6vy8sbupra47" path="res://Scenes/Player.tscn" id="2_m0g8t"]
 [ext_resource type="Script" uid="uid://bw6odvw5oitr5" path="res://Scripts/HandleSections.gd" id="3_o85vq"]
+[ext_resource type="Texture2D" uid="uid://hb1x81t3tcpx" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (White)/tile_0440.png" id="3_wf6gw"]
 [ext_resource type="PackedScene" uid="uid://bpos7hdah7g2l" path="res://Scenes/section_1.tscn" id="4_7ph4x"]
+[ext_resource type="Texture2D" uid="uid://cuy722mgxpurs" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (White)/tile_0441.png" id="4_grb6v"]
 [ext_resource type="PackedScene" uid="uid://blbhglbc7lp4h" path="res://Scenes/section_2.tscn" id="4_pk35k"]
+[ext_resource type="Texture2D" uid="uid://ponipcaemldf" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (White)/tile_0439.png" id="5_c21gh"]
+[ext_resource type="Texture2D" uid="uid://dnt4sfy1mjwxj" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0438.png" id="6_dgqmq"]
 [ext_resource type="AudioStream" uid="uid://bnob64tsu4wcq" path="res://SFX/trance_dungeon_bpm130.mp3" id="7_b5lau"]
 [ext_resource type="PackedScene" uid="uid://ds5xqbc3v57mo" path="res://Scenes/pause_menu.tscn" id="7_ftk8y"]
+[ext_resource type="Texture2D" uid="uid://chtyd0prhvn1w" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0440.png" id="7_ivh21"]
+[ext_resource type="Texture2D" uid="uid://dgt5f1xywewad" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0441.png" id="8_7j4o8"]
 [ext_resource type="Texture2D" uid="uid://bw2gomukgwnbs" path="res://Sprites/npc/Items/genericItem_color_002.png" id="8_b5lau"]
 [ext_resource type="Texture2D" uid="uid://xxqnwxr7wj22" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tilemap/tilemap_white_packed.png" id="9_0a7tl"]
+[ext_resource type="Texture2D" uid="uid://duhi08l6wn6u2" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0439.png" id="9_v0h0j"]
 
 [sub_resource type="GDScript" id="GDScript_ftk8y"]
 
@@ -836,6 +844,14 @@ sources/1 = SubResource("TileSetAtlasSource_cv2f7")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_o85vq")
+tile_up = ExtResource("2_hhruo")
+tile_down = ExtResource("3_wf6gw")
+tile_left = ExtResource("4_grb6v")
+tile_right = ExtResource("5_c21gh")
+c_tile_up = ExtResource("6_dgqmq")
+c_tile_down = ExtResource("7_ivh21")
+c_tile_left = ExtResource("8_7j4o8")
+c_tile_right = ExtResource("9_v0h0j")
 
 [node name="SectionManager" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("3_o85vq")
@@ -898,17 +914,36 @@ parameters/looping = true
 [node name="QuestManager" type="Node" parent="."]
 script = SubResource("GDScript_ftk8y")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="UI2" type="CanvasLayer" parent="."]
 
-[node name="GenericItemColor002" type="Sprite2D" parent="CanvasLayer2"]
+[node name="GenericItemColor002" type="Sprite2D" parent="UI2"]
 position = Vector2(739, 68)
 scale = Vector2(0.445455, 0.445455)
 texture = ExtResource("8_b5lau")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="CanvasLayer2"]
+[node name="TileMapLayer" type="TileMapLayer" parent="UI2"]
 position = Vector2(870, 37)
-scale = Vector2(-3.26113, -3.26113)
+rotation = -3.14159
+scale = Vector2(3.26113, 3.26113)
 tile_map_data = PackedByteArray(0, 0, 254, 255, 255, 255, 1, 0, 30, 0, 12, 0, 0, 0, 255, 255, 255, 255, 1, 0, 31, 0, 12, 0, 0, 0, 0, 0, 255, 255, 1, 0, 32, 0, 12, 0, 0, 0, 1, 0, 255, 255, 1, 0, 33, 0, 12, 0, 0, 0)
 tile_set = SubResource("TileSet_7cu71")
+
+[node name="PatternContainer" type="HBoxContainer" parent="UI2"]
+offset_left = 772.0
+offset_top = 46.0
+offset_right = 970.0
+offset_bottom = 86.0
+
+[node name="Pattern1" type="TextureButton" parent="UI2/PatternContainer"]
+layout_mode = 2
+
+[node name="Pattern2" type="TextureButton" parent="UI2/PatternContainer"]
+layout_mode = 2
+
+[node name="Pattern3" type="TextureButton" parent="UI2/PatternContainer"]
+layout_mode = 2
+
+[node name="Pattern4" type="TextureButton" parent="UI2/PatternContainer"]
+layout_mode = 2
 
 [connection signal="pressed" from="UI/DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]
