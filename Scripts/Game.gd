@@ -25,6 +25,13 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @export var c_tile_left : Texture2D
 @export var c_tile_right : Texture2D
 
+@onready var input_1: TextureRect = $UI2/PatternContainer/Input1
+@onready var input_2: TextureRect = $UI2/PatternContainer/Input2
+@onready var input_3: TextureRect = $UI2/PatternContainer/Input3
+@onready var input_4: TextureRect = $UI2/PatternContainer/Input4
+
+
+
 # Leaderboard data
 var leaderboard: Array = []
 var acceptable_input = ["ui_left","ui_right","ui_down","ui_up"]
@@ -55,7 +62,8 @@ func _ready() -> void:
 	# Generate first random sequence
 	generate_random_sequence()
 	# Setup tilemap position
-	setup_tilemap_position()
+	#setup_tilemap_position()
+	call_deferred("update_pattern_list")
 	# Load leaderboard from file
 	load_leaderboard()
 	
@@ -86,9 +94,9 @@ func generate_random_sequence(length: int = 4) -> void:
 		var random_direction = available_directions[randi() % available_directions.size()]
 		current_craft_request.append(random_direction)
 	
-	print("🎯 NEW CHALLENGE: Press these keys in order → ", current_craft_request)
-	update_tilemap_display()
-
+	#print("🎯 NEW CHALLENGE: Press these keys in order → ", current_craft_request)
+	#update_tilemap_display()
+	update_pattern_list()
 func generate_random_sequence_no_repeats(length: int = 4) -> void:
 	"""Generate a random sequence without consecutive repeating directions"""
 	current_craft_request.clear()
@@ -106,8 +114,9 @@ func generate_random_sequence_no_repeats(length: int = 4) -> void:
 		current_craft_request.append(random_direction)
 		last_direction = random_direction
 	
-	print("🎯 NEW CHALLENGE (No Repeats): Press these keys in order → ", current_craft_request)
-	update_tilemap_display()
+	#print("🎯 NEW CHALLENGE (No Repeats): Press these keys in order → ", current_craft_request)
+	update_pattern_list()
+	#update_tilemap_display()
 
 func increase_difficulty() -> void:
 	"""Increase sequence length as game progresses"""
@@ -126,6 +135,41 @@ func update_score_display() -> void:
 	if score_label:
 		score_label.text = "Score: %d" % int(score)
 
+func update_pattern_list():
+	# Define texture mappings for complete and incomplete states
+	var texture_mappings = {
+		"complete": {
+			"up": c_tile_up,
+			"down": c_tile_down,
+			"left": c_tile_left,
+			"right": c_tile_right
+		},  
+		"incomplete": {
+			"up": tile_up,
+			"down": tile_down,
+			"left": tile_left,
+			"right": tile_right
+		}
+	}
+	
+	# Store input references in an array for easier iteration
+	var input_nodes = [input_1, input_2, input_3, input_4]
+	
+	# Initially set all inputs to incomplete textures
+	for i in range(input_nodes.size()):
+		var direction = current_craft_request[i]
+		input_nodes[i].texture = texture_mappings["incomplete"][direction]
+	
+	# Update completed inputs based on input_array
+	for i in range(input_array.size()):
+		var direction = current_craft_request[i]
+		input_nodes[i].texture = texture_mappings["complete"][direction]
+		print("Updated input %d to complete texture for direction: %s" % [i, direction])
+		
+		
+		
+		
+	pass
 func reset_game() -> void:
 	# Unpause game
 	get_tree().paused = false
@@ -146,8 +190,8 @@ func reset_game() -> void:
 	
 	# Generate new sequence when game resets
 	generate_random_sequence()
-	update_tilemap_display()
-
+	#update_tilemap_display()
+	update_pattern_list()
 func game_over() -> void:
 	get_tree().paused = true
 	is_game_over = true
@@ -228,17 +272,22 @@ func _input(event: InputEvent) -> void:
 		if input_received != "" and input_pos < current_craft_request.size():
 			if current_craft_request[input_pos] == input_received:
 				input_array.append(input_received)
-				print("✅ CORRECT! You pressed: ", input_received.to_upper(), " | Progress: ", input_array.size(), "/", current_craft_request.size())
-				update_tilemap_display()  # Update visual progress
+				#print("✅ CORRECT! You pressed: ", input_received.to_upper(), " | Progress: ", input_array.size(), "/", current_craft_request.size())
+				update_pattern_list()
+				#update_tilemap_display()  # Update visual progress
 			else:
 				input_array.clear()
-				print("❌ WRONG KEY! Expected: ", current_craft_request[input_pos].to_upper(), " but you pressed: ", input_received.to_upper(), " | SEQUENCE RESET!")
-				update_tilemap_display()  # Reset visual progress
+				#print("❌ WRONG KEY! Expected: ", current_craft_request[input_pos].to_upper(), " but you pressed: ", input_received.to_upper(), " | SEQUENCE RESET!")
+				update_pattern_list()
+				#update_tilemap_display()  # Reset visual progress
 				return
 		
 		# Check if sequence is complete
 		if input_array.size() == current_craft_request.size():
-			print("🎉 SEQUENCE COMPLETED! Great job!")
+			#print("🎉 SEQUENCE COMPLETED! Great job!")
+			set_process_input(false)
+			await get_tree().create_timer(1).timeout
+			set_process_input(true)
 			input_array.clear()
 			
 			# Give bonus points for completing sequence

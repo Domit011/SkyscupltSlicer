@@ -944,19 +944,19 @@ stretch_mode = 4
 [node name="Input2" type="TextureRect" parent="UI2/PatternContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("7_ivh21")
+texture = ExtResource("6_dgqmq")
 stretch_mode = 4
 
 [node name="Input3" type="TextureRect" parent="UI2/PatternContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("8_7j4o8")
+texture = ExtResource("6_dgqmq")
 stretch_mode = 4
 
 [node name="Input4" type="TextureRect" parent="UI2/PatternContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("9_v0h0j")
+texture = ExtResource("6_dgqmq")
 stretch_mode = 4
 
 [connection signal="pressed" from="UI/DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]
