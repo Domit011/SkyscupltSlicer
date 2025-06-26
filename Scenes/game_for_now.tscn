@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://3ik7djlndy5t"]
+[gd_scene load_steps=20 format=3 uid="uid://3ik7djlndy5t"]
 
 [ext_resource type="Script" uid="uid://bejfkbc7y8m8k" path="res://Scripts/Game.gd" id="1_o85vq"]
 [ext_resource type="Texture2D" uid="uid://uxy78dvyfp65" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (White)/tile_0438.png" id="2_hhruo"]
@@ -17,8 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://bw2gomukgwnbs" path="res://Sprites/npc/Items/genericItem_color_002.png" id="8_b5lau"]
 [ext_resource type="Texture2D" uid="uid://xxqnwxr7wj22" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tilemap/tilemap_white_packed.png" id="9_0a7tl"]
 [ext_resource type="Texture2D" uid="uid://duhi08l6wn6u2" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0439.png" id="9_v0h0j"]
-
-[sub_resource type="GDScript" id="GDScript_ftk8y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cv2f7"]
 texture = ExtResource("9_0a7tl")
@@ -896,6 +894,10 @@ offset_bottom = 8.0
 scale = Vector2(14.9473, 15.0442)
 metadata/_edit_use_anchors_ = true
 
+[node name="InventoryLabel" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="Player" parent="." node_paths=PackedStringArray("game_manager") instance=ExtResource("2_m0g8t")]
 position = Vector2(578, 604)
 game_manager = NodePath("..")
@@ -910,9 +912,6 @@ autoplay = true
 parameters/looping = true
 
 [node name="Timer" type="Timer" parent="."]
-
-[node name="QuestManager" type="Node" parent="."]
-script = SubResource("GDScript_ftk8y")
 
 [node name="UI2" type="CanvasLayer" parent="."]
 

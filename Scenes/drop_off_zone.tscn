@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj3ewep81q6a1"]
+
+[ext_resource type="Script" uid="uid://cnyctdbnfy6qd" path="res://Scripts/drop_off_zone.gd" id="1_vdgsb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_16rcd"]
+size = Vector2(236, 136)
+
+[node name="DropOffZone" type="Area2D" groups=["DropOff"]]
+script = ExtResource("1_vdgsb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(118, 68)
+shape = SubResource("RectangleShape2D_16rcd")
+
+[node name="SuccessLabel" type="CanvasLayer" parent="."]
+
+[node name="SuccessLabel" type="Label" parent="SuccessLabel"]
+offset_right = 15.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 20
+text = "Success"

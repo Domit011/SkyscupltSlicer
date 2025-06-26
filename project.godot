@@ -22,6 +22,7 @@ QuestManager="*res://Scripts/QuestManager.gd"
 [global_group]
 
 Obstacle=""
+DropOff=""
 
 [input]
 

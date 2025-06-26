@@ -1,5 +1,6 @@
 extends Node2D
 # Score variables
+var has_item = false
 var score: float = 0.0
 var is_game_over: bool = false
 # Leaderboard file path
@@ -14,6 +15,9 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var restart_button: Button = $UI/DeathScreen/RestartButton
 @onready var section_manager: SectionManager = $SectionManager
 @onready var input_display_tilemap: TileMap = $UI/InputDisplayTileMap  # Add your tilemap here
+
+# Inventory UI (add these to your scene)
+@onready var inventory_label: Label = $UI/InventoryLabel  # Add this to show inventory status
 
 @export_group("Tile Graphics")
 @export var tile_up : Texture2D
@@ -30,8 +34,6 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var input_3: TextureRect = $UI2/PatternContainer/Input3
 @onready var input_4: TextureRect = $UI2/PatternContainer/Input4
 
-
-
 # Leaderboard data
 var leaderboard: Array = []
 var acceptable_input = ["ui_left","ui_right","ui_down","ui_up"]
@@ -41,6 +43,10 @@ var input_array : Array[String] = []
 var current_craft_request: Array[String] = []
 var available_directions = ["left", "right", "up", "down"]
 var sequence_length: int = 4  # Default sequence length
+
+# Inventory system
+var player_inventory: Array[String] = []  # Store crafted items
+var max_inventory_size: int = 1  # Maximum items player can carry
 
 # Tilemap constants for arrow sprites (adjust these to match your tileset)
 const ARROW_TILES = {
@@ -84,6 +90,16 @@ func _ready() -> void:
 		score_label.position = Vector2(viewport_size.x / 2, 20)  # 20 pixels from top
 		# Center the label horizontally by adjusting pivot
 		score_label.pivot_offset = Vector2(score_label.size.x / 2, 0)  # Center on x-axis
+	
+	# Position inventory label
+	if inventory_label:
+		var viewport_size = get_viewport_rect().size
+		inventory_label.position = Vector2(viewport_size.x / 2, 60)  # Below score
+		inventory_label.pivot_offset = Vector2(inventory_label.size.x / 2, 0)
+	
+	# Connect player delivery signal
+	if player:
+		player.connect("item_delivered", Callable(self, "_on_item_delivered"))
 
 func generate_random_sequence(length: int = 4) -> void:
 	"""Generate a random sequence of directional inputs"""
@@ -97,6 +113,7 @@ func generate_random_sequence(length: int = 4) -> void:
 	#print("🎯 NEW CHALLENGE: Press these keys in order → ", current_craft_request)
 	#update_tilemap_display()
 	update_pattern_list()
+
 func generate_random_sequence_no_repeats(length: int = 4) -> void:
 	"""Generate a random sequence without consecutive repeating directions"""
 	current_craft_request.clear()
@@ -135,6 +152,60 @@ func update_score_display() -> void:
 	if score_label:
 		score_label.text = "Score: %d" % int(score)
 
+func update_inventory_display() -> void:
+	"""Update the inventory display UI"""
+	if inventory_label:
+		var inventory_text = "Inventory (%d/%d) " % [player_inventory.size(), max_inventory_size]
+		if player_inventory.size() == 0:
+			inventory_text += ""
+		else:
+			inventory_label.text = inventory_text
+
+func add_item_to_inventory(item_name: String) -> bool:
+	"""Add an item to player inventory. Returns true if successful."""
+	if player_inventory.size() < max_inventory_size:
+		player_inventory.append(item_name)
+		print("📦 Item added to inventory: ", item_name)
+		update_inventory_display()
+		return true
+	else:
+		print("❌ Inventory full! Cannot add item: ", item_name)
+		return false
+
+func remove_item_from_inventory(item_name: String) -> bool:
+	"""Remove an item from player inventory. Returns true if successful."""
+	var index = player_inventory.find(item_name)
+	if index != -1:
+		player_inventory.remove_at(index)
+		print("📤 Item delivered: ", item_name)
+		update_inventory_display()
+		return true
+	else:
+		print("❌ Item not found in inventory: ", item_name)
+		return false
+
+func deliver_next_item() -> bool:
+	"""Deliver the first item in inventory. Returns true if successful."""
+	if player_inventory.size() > 0:
+		var delivered_item = player_inventory[0]
+		player_inventory.remove_at(0)
+		print("📤 Item delivered: ", delivered_item)
+		update_inventory_display()
+		return true
+	else:
+		print("❌ No items to deliver!")
+		return false
+
+func _on_item_delivered() -> void:
+	"""Called when player enters a drop-off zone"""
+	if deliver_next_item():
+		# Give points for delivery
+		score += 100
+		print("💰 DELIVERY BONUS: +100 points! New score: ", int(score))
+		
+		# Generate new sequence after delivery
+		generate_random_sequence(sequence_length)
+
 func update_pattern_list():
 	# Define texture mappings for complete and incomplete states
 	var texture_mappings = {
@@ -165,18 +236,17 @@ func update_pattern_list():
 		var direction = current_craft_request[i]
 		input_nodes[i].texture = texture_mappings["complete"][direction]
 		print("Updated input %d to complete texture for direction: %s" % [i, direction])
-		
-		
-		
-		
-	pass
+
 func reset_game() -> void:
 	# Unpause game
 	get_tree().paused = false
 	# Reset score and game state
 	score = 0.0
 	is_game_over = false
+	player_inventory.clear()  # Clear inventory on reset
 	update_score_display()
+	update_inventory_display()
+	
 	# Reset player position
 	if player:
 		player.position = Vector2(600, -650)
@@ -190,8 +260,8 @@ func reset_game() -> void:
 	
 	# Generate new sequence when game resets
 	generate_random_sequence()
-	#update_tilemap_display()
 	update_pattern_list()
+
 func game_over() -> void:
 	get_tree().paused = true
 	is_game_over = true
@@ -272,30 +342,39 @@ func _input(event: InputEvent) -> void:
 		if input_received != "" and input_pos < current_craft_request.size():
 			if current_craft_request[input_pos] == input_received:
 				input_array.append(input_received)
-				#print("✅ CORRECT! You pressed: ", input_received.to_upper(), " | Progress: ", input_array.size(), "/", current_craft_request.size())
 				update_pattern_list()
-				#update_tilemap_display()  # Update visual progress
 			else:
 				input_array.clear()
-				#print("❌ WRONG KEY! Expected: ", current_craft_request[input_pos].to_upper(), " but you pressed: ", input_received.to_upper(), " | SEQUENCE RESET!")
 				update_pattern_list()
-				#update_tilemap_display()  # Reset visual progress
 				return
 		
 		# Check if sequence is complete
 		if input_array.size() == current_craft_request.size():
-			#print("🎉 SEQUENCE COMPLETED! Great job!")
+			print("🎉 SEQUENCE COMPLETED! Crafting item...")
 			set_process_input(false)
-			await get_tree().create_timer(1).timeout
-			set_process_input(true)
-			input_array.clear()
 			
-			# Give bonus points for completing sequence
-			score += 50  # Bonus points for completing sequence
-			print("💰 BONUS: +50 points! New score: ", int(score))
+			# Create item name from sequence
+			var item_name = "Item_" + "_".join(current_craft_request)
 			
-			# Generate a new random sequence automatically
-			generate_random_sequence(sequence_length)
+			# Try to add item to inventory
+			if add_item_to_inventory(item_name):
+				# Give bonus points for completing sequence
+				score += 50
+				print("💰 CRAFTING BONUS: +50 points! New score: ", int(score))
+				
+				await get_tree().create_timer(1).timeout
+				set_process_input(true)
+				input_array.clear()
+				
+				# Only generate new sequence if inventory isn't full
+				if player_inventory.size() < max_inventory_size:
+					generate_random_sequence(sequence_length)
+				else:
+					print("🎒 Inventory full! Deliver items to continue crafting.")
+			else:
+				print("❌ Cannot craft - inventory full!")
+				await get_tree().create_timer(1).timeout
+				set_process_input(true)
 
 func update_tilemap_display() -> void:
 	"""Update the tilemap to show the current sequence and progress"""
@@ -335,3 +414,7 @@ func setup_tilemap_position() -> void:
 		var viewport_size = get_viewport_rect().size
 		# Position at top-left, below the score
 		input_display_tilemap.position = Vector2(50, 80)  # Adjust as needed
+
+func increase_score():
+	score += 100
+	print("score increased")

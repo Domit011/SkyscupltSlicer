@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bpos7hdah7g2l"]
+[gd_scene load_steps=18 format=3 uid="uid://bpos7hdah7g2l"]
 
 [ext_resource type="Script" uid="uid://birgik37skaj4" path="res://Scripts/section.gd" id="1_28ggr"]
 [ext_resource type="Texture2D" uid="uid://c73rak7kdt6de" path="res://Sprites/backgrounds/dawnbackground.png" id="2_utugn"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://buddhhlqnx11k" path="res://Scenes/Seagull.tscn" id="4_utugn"]
 [ext_resource type="Texture2D" uid="uid://cll3mag13fsh8" path="res://Sprites/npc/Male adventurer/Tilesheet/character_maleAdventurer_sheet.png" id="5_l8g4o"]
 [ext_resource type="Texture2D" uid="uid://c4xs77t8h2tlr" path="res://Sprites/stuff'n'things/Blue-cloud-clipart-PNG-removebg-preview.png" id="6_8wqkq"]
+[ext_resource type="PackedScene" uid="uid://bj3ewep81q6a1" path="res://Scenes/drop_off_zone.tscn" id="7_8wqkq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l8g4o"]
 
@@ -136,3 +137,6 @@ frame_progress = 0.488415
 position = Vector2(235, 200)
 scale = Vector2(0.301386, 0.301386)
 texture = ExtResource("6_8wqkq")
+
+[node name="DropOffZone" parent="." instance=ExtResource("7_8wqkq")]
+position = Vector2(138, 119)
