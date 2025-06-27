@@ -139,4 +139,4 @@ scale = Vector2(0.301386, 0.301386)
 texture = ExtResource("6_8wqkq")
 
 [node name="DropOffZone" parent="." instance=ExtResource("7_8wqkq")]
-position = Vector2(138, 119)
+position = Vector2(159, 152)

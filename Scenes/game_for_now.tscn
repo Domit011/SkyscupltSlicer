@@ -898,9 +898,8 @@ metadata/_edit_use_anchors_ = true
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="Player" parent="." node_paths=PackedStringArray("game_manager") instance=ExtResource("2_m0g8t")]
+[node name="Player" parent="." instance=ExtResource("2_m0g8t")]
 position = Vector2(578, 604)
-game_manager = NodePath("..")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -959,3 +958,4 @@ texture = ExtResource("9_v0h0j")
 stretch_mode = 4
 
 [connection signal="pressed" from="UI/DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="item_delivered" from="Player" to="." method="_on_player_item_delivered"]

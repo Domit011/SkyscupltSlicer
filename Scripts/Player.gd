@@ -24,17 +24,35 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _on_hit_box_body_entered(body: Node2D) -> void:
+	print("🎯 Hit box collision detected with: ", body.name)
+	print("🎯 Body groups: ", body.get_groups())
+	
 	if body.is_in_group("Obstacle"):
 		print("you die")
 		game_manager.game_over()
 	elif body.is_in_group("DropOff"):
-		print("📦 Entered drop-off zone!")
-		# Emit signal to game manager to handle delivery
-		item_delivered.emit()
+		print("📦 Collided with drop-off zone!")
+		print("📦 Game manager inventory size: ", game_manager.player_inventory.size())
+		# Check if player has items to deliver
+		if game_manager.player_inventory.size() > 0:
+			print("🚀 Emitting item_delivered signal...")
+			# Emit signal to game manager to handle delivery
+			item_delivered.emit()
+		else:
+			print("❌ No items to deliver!")
 
 # Alternative method if you prefer Area2D detection instead of body_entered
 func _on_hit_box_area_entered(area: Area2D) -> void:
+	print("🎯 Hit box area collision detected with: ", area.name)
+	print("🎯 Area groups: ", area.get_groups())
+	
 	if area.is_in_group("DropOff"):
-		print("📦 Entered drop-off zone!")
-		# Emit signal to game manager to handle delivery
-		item_delivered.emit()
+		print("📦 Collided with drop-off zone!")
+		print("📦 Game manager inventory size: ", game_manager.player_inventory.size())
+		# Check if player has items to deliver
+		if game_manager.player_inventory.size() > 0:
+			print("🚀 Emitting item_delivered signal...")
+			# Emit signal to game manager to handle delivery
+			item_delivered.emit()
+		else:
+			print("❌ No items to deliver!")
