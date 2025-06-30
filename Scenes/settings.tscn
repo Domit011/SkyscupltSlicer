@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgmltgq7iwqfe"]
+[gd_scene load_steps=4 format=3 uid="uid://dgmltgq7iwqfe"]
 
 [ext_resource type="Texture2D" uid="uid://bvdpjtxykjt7y" path="res://Sprites/UI/back-arrow-png.png" id="1_i44u3"]
+[ext_resource type="Script" uid="uid://c3njj7b1e0be" path="res://Scripts/settingsMenu.gd" id="1_lhmql"]
 [ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_lhmql"]
 
 [node name="Settings" type="Control"]
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_lhmql")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0

@@ -16,7 +16,7 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var restart_button: Button = $UI/DeathScreen/RestartButton
 @onready var section_manager: SectionManager = $SectionManager
 @onready var input_display_tilemap: TileMap = $UI/InputDisplayTileMap
-
+@onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer  # Adjust path as needed
 # Inventory UI
 @onready var inventory_label: Label = $UI/InventoryLabel
 
@@ -52,6 +52,13 @@ var max_inventory_size: int = 3
 var is_crafting_active: bool = true
 
 func _ready() -> void:
+	if audio_player and audio_player.stream:
+		audio_player.stream.loop = true  # For most audio formats
+		audio_player.play()
+
+	# Stop menu music when entering game
+	AudioManager.stop_menu_music()
+	# ... rest of your game _ready() code
 	# Unpause game
 	get_tree().paused = false
 	# Initialize game state
@@ -61,6 +68,7 @@ func _ready() -> void:
 	call_deferred("update_pattern_list")
 	# Load leaderboard from file
 	load_leaderboard()
+	
 	
 	# Connect signals with null checks
 	if restart_button:
@@ -127,12 +135,11 @@ func update_score_display() -> void:
 func update_inventory_display() -> void:
 	"""Update the inventory display UI"""
 	if inventory_label:
-		var inventory_text = "Inventory (%d/%d): " % [player_inventory.size(), max_inventory_size]
+		var inventory_text = "Inventory (%d/%d): " % [player_inventory.size(), max_inventory_size] 
 		if player_inventory.size() == 0:
 			inventory_text += "Empty"
 		else:
-			inventory_text += str(player_inventory)
-		inventory_label.text = inventory_text
+			inventory_label.text = inventory_text
 
 func add_item_to_inventory(item_name: String) -> bool:
 	"""Add an item to player inventory. Returns true if successful."""
@@ -170,7 +177,8 @@ func _on_item_delivered() -> void:
 			print("🔄 New crafting sequence generated!")
 	else:
 		print("❌ No items in inventory to deliver!")
-
+		print("💀 Game Over - No items to deliver!")
+		game_over()  # Add this line!
 func update_pattern_list():
 	"""Update the visual pattern display"""
 	# Define texture mappings for complete and incomplete states

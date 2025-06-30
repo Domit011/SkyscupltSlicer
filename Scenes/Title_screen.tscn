@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdnkhgt65tjn5"]
+[gd_scene load_steps=13 format=3 uid="uid://bdnkhgt65tjn5"]
 
+[ext_resource type="Script" uid="uid://clplb6e6w54m1" path="res://Scripts/MainMenu.gd" id="1_c1gdy"]
 [ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="1_glfsf"]
 [ext_resource type="FontFile" uid="uid://b1s7se5rvlegj" path="res://Fonts/kingthings-bloone-font/KingthingsBloone-3926.ttf" id="2_wou8e"]
 [ext_resource type="Script" uid="uid://buxqndjhqu17b" path="res://Scripts/play_button.gd" id="3_s30q0"]
@@ -29,6 +30,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_c1gdy")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
