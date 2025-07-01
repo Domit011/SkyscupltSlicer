@@ -159,6 +159,9 @@ func _on_item_delivered() -> void:
 	print("📦 Current inventory contents: ", player_inventory)
 	
 	if player_inventory.size() > 0:
+		# Check if inventory was full before delivery
+		var was_inventory_full = (player_inventory.size() == max_inventory_size)
+		
 		# Remove the first item from inventory
 		var delivered_item = player_inventory[0]
 		player_inventory.remove_at(0)
@@ -170,8 +173,14 @@ func _on_item_delivered() -> void:
 		score += 100
 		print("💰 DELIVERY BONUS: +100 points! New score: ", int(score))
 		
-		# Generate new sequence after delivery if crafting isn't active
-		if not is_crafting_active and player_inventory.size() < max_inventory_size:
+		# If inventory was full and now has space, immediately update display and reactivate crafting
+		if was_inventory_full and player_inventory.size() < max_inventory_size:
+			print("🔓 Inventory no longer full - reactivating crafting!")
+			input_array.clear()
+			is_crafting_active = true
+			generate_random_sequence(sequence_length)
+		# Generate new sequence after delivery if crafting isn't active but inventory still has space
+		elif not is_crafting_active and player_inventory.size() < max_inventory_size:
 			is_crafting_active = true
 			generate_random_sequence(sequence_length)
 			print("🔄 New crafting sequence generated!")
@@ -363,19 +372,21 @@ func complete_crafting_sequence() -> void:
 		score += 50
 		print("💰 CRAFTING BONUS: +50 points! New score: ", int(score))
 		
-		# Clear input array for next sequence
-		input_array.clear()
+		# Show completed sequence first
+		update_pattern_list()
 		
 		# Only generate new sequence if inventory isn't full
 		if player_inventory.size() < max_inventory_size:
 			# Wait a moment, then generate new sequence
 			await get_tree().create_timer(1.0).timeout
+			# Clear input array BEFORE generating new sequence
+			input_array.clear()
 			is_crafting_active = true
 			generate_random_sequence(sequence_length)
 		else:
 			print("🎒 Inventory full! Deliver items to continue crafting.")
-			# Clear the pattern display when inventory is full
-			update_pattern_list()
+			# Keep the completed sequence displayed when inventory is full
+			# Don't clear input_array here so the completed tiles remain visible
 	else:
 		print("❌ Cannot craft - inventory full!")
 		input_array.clear()

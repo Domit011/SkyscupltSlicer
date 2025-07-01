@@ -34,3 +34,7 @@ func _on_restart_pressed() -> void:
 
 func _process(delta):
 	testEsc()
+
+
+func _on_exit_pressed():
+	pass # Replace with function body.

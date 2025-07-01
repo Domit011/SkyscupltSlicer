@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ds5xqbc3v57mo"]
+[gd_scene load_steps=8 format=3 uid="uid://ds5xqbc3v57mo"]
 
 [ext_resource type="Script" uid="uid://bin68oi7x74ge" path="res://Scripts/pause_menu.gd" id="1_k0w1u"]
 [ext_resource type="Shader" uid="uid://dgh3mtxp1i8n" path="res://Shaders/pause_menu.gdshader" id="2_1och7"]
+[ext_resource type="FontFile" uid="uid://b1s7se5rvlegj" path="res://Fonts/kingthings-bloone-font/KingthingsBloone-3926.ttf" id="3_1och7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bpi0q"]
 shader = ExtResource("2_1och7")
@@ -86,6 +87,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -184.5
+offset_top = 127.0
+offset_right = 184.5
+offset_bottom = 216.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_1och7")
+theme_override_font_sizes/font_size = 65
+text = "Paused"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 modulate = Color(1, 1, 1, 0)
