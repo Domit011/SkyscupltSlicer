@@ -89,14 +89,15 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -184.5
-offset_top = 127.0
-offset_right = 184.5
-offset_bottom = 216.0
+offset_left = -182.0
+offset_top = 45.0
+offset_right = 187.0
+offset_bottom = 134.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_1och7")
 theme_override_font_sizes/font_size = 65
@@ -131,6 +132,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Restart"
 
+[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Exit"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_sjs17")
@@ -138,3 +144,4 @@ libraries = {
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://cnyctdbnfy6qd" path="res://Scripts/drop_off_zone.gd" id="1_vdgsb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_16rcd"]
-size = Vector2(179, 105)
+size = Vector2(295, 104)
 
 [node name="DropOffZone" type="Area2D" groups=["DropOff"]]
 script = ExtResource("1_vdgsb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(89.5, 52.5)
+position = Vector2(147.5, 52)
 shape = SubResource("RectangleShape2D_16rcd")
 
 [node name="SuccessLabel" type="CanvasLayer" parent="."]

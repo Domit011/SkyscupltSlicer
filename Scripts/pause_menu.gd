@@ -1,6 +1,7 @@
 extends Control
 
 
+
 func _ready():
 	$AnimationPlayer.play("RESET")
 	hide()
@@ -36,5 +37,5 @@ func _process(delta):
 	testEsc()
 
 
-func _on_exit_pressed():
-	pass # Replace with function body.
+#func _on_exit_pressed():
+	#reset_game()

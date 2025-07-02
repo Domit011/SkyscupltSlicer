@@ -17,7 +17,6 @@ config/icon="res://Sprites/icon.svg"
 
 [autoload]
 
-QuestManager="*res://Scripts/QuestManager.gd"
 AudioManager="*res://Scripts/AudioManager.gd"
 
 [global_group]

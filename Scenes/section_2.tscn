@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://blbhglbc7lp4h"]
 
 [ext_resource type="Script" uid="uid://birgik37skaj4" path="res://Scripts/section.gd" id="1_a7tme"]
-[ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="2_a7tme"]
+[ext_resource type="Texture2D" uid="uid://djtcvxp50eene" path="res://Sprites/backgrounds/New Piskel-1.png.png" id="2_a7tme"]
 [ext_resource type="Texture2D" uid="uid://ijrqj2knseqf" path="res://Sprites/icon.svg" id="3_7danf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l8g4o"]
@@ -10,8 +10,8 @@
 script = ExtResource("1_a7tme")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(576, 324)
-scale = Vector2(1.125, 0.84375)
+position = Vector2(576.5, 323.5)
+scale = Vector2(8.99219, 5.05469)
 texture = ExtResource("2_a7tme")
 
 [node name="Obstacles" type="Node2D" parent="."]
