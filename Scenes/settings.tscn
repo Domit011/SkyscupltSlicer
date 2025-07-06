@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgmltgq7iwqfe"]
+[gd_scene load_steps=5 format=3 uid="uid://dgmltgq7iwqfe"]
 
 [ext_resource type="Script" uid="uid://c3njj7b1e0be" path="res://Scripts/settingsMenu.gd" id="1_lhmql"]
 [ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="2_aaqfp"]
 [ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_lhmql"]
+[ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="4_aaqfp"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -48,6 +49,7 @@ layout_mode = 2
 
 [node name="MusicLabel" type="Label" parent="VBoxContainer/MusicContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_aaqfp")
 
 [node name="MusicSlider" type="HSlider" parent="VBoxContainer/MusicContainer"]
 layout_mode = 2
@@ -57,6 +59,7 @@ layout_mode = 2
 
 [node name="SFXLabel" type="Label" parent="VBoxContainer/SFXContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_aaqfp")
 
 [node name="SFXSlider" type="HSlider" parent="VBoxContainer/SFXContainer"]
 layout_mode = 2

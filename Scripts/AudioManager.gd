@@ -18,13 +18,15 @@ var music_volume: float = 1.0
 var sfx_volume: float = 1.0
 
 func _ready() -> void:
+	print("🔊 AudioManager _ready() called - Instance: ", self)
+	
 	# Create the audio players
 	menu_music_player = AudioStreamPlayer.new()
 	sfx_player = AudioStreamPlayer.new()
 	
-	# Set audio buses
-	menu_music_player.bus = MUSIC_BUS
-	sfx_player.bus = SFX_BUS
+	# Set audio buses (comment out if buses don't exist)
+	# menu_music_player.bus = MUSIC_BUS
+	# sfx_player.bus = SFX_BUS
 	
 	# Add to scene tree
 	add_child(menu_music_player)
@@ -60,11 +62,13 @@ func play_sfx(sound: AudioStream):
 
 # Volume control functions
 func set_music_volume_percent(percent: float):
+	print("🔊 Setting music volume to: ", percent, "% - AudioManager instance: ", self)
 	music_volume = percent / 100.0
 	apply_music_volume()
 	save_volume_settings()
 
 func set_sfx_volume_percent(percent: float):
+	print("🔊 Setting SFX volume to: ", percent, "% - AudioManager instance: ", self)
 	sfx_volume = percent / 100.0
 	apply_sfx_volume()
 	save_volume_settings()
@@ -76,22 +80,16 @@ func get_sfx_volume_percent() -> float:
 	return sfx_volume * 100.0
 
 func apply_music_volume():
-	var bus_index = AudioServer.get_bus_index(MUSIC_BUS)
-	if bus_index != -1:
-		# Convert linear volume to decibels
-		var db = linear_to_db(music_volume)
-		# Clamp to prevent extremely low values
-		db = clamp(db, -80.0, 0.0)
-		AudioServer.set_bus_volume_db(bus_index, db)
+	# Apply directly to the music player
+	var db = linear_to_db(music_volume)
+	db = clamp(db, -80.0, 0.0)
+	menu_music_player.volume_db = db
 
 func apply_sfx_volume():
-	var bus_index = AudioServer.get_bus_index(SFX_BUS)
-	if bus_index != -1:
-		# Convert linear volume to decibels
-		var db = linear_to_db(sfx_volume)
-		# Clamp to prevent extremely low values
-		db = clamp(db, -80.0, 0.0)
-		AudioServer.set_bus_volume_db(bus_index, db)
+	# Apply directly to the SFX player
+	var db = linear_to_db(sfx_volume)
+	db = clamp(db, -80.0, 0.0)
+	sfx_player.volume_db = db
 
 func save_volume_settings():
 	var config = ConfigFile.new()
@@ -111,6 +109,16 @@ func load_volume_settings():
 		music_volume = 1.0
 		sfx_volume = 1.0
 	
+	# Debug: Check if buses exist
+	debug_audio_buses()
+	
 	# Apply the loaded volumes
 	apply_music_volume()
 	apply_sfx_volume()
+
+func debug_audio_buses():
+	print("🔊 Audio Bus Debug:")
+	print("Master bus index: ", AudioServer.get_bus_index(MASTER_BUS))
+	print("Music bus index: ", AudioServer.get_bus_index(MUSIC_BUS))
+	print("SFX bus index: ", AudioServer.get_bus_index(SFX_BUS))
+	print("Total buses: ", AudioServer.get_bus_count())
