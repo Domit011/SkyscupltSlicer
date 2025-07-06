@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdnkhgt65tjn5"]
+[gd_scene load_steps=15 format=3 uid="uid://bdnkhgt65tjn5"]
 
 [ext_resource type="Script" uid="uid://clplb6e6w54m1" path="res://Scripts/MainMenu.gd" id="1_c1gdy"]
 [ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="1_glfsf"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="7_mdm14"]
 [ext_resource type="Script" uid="uid://b4i2ql75plw3v" path="res://Scripts/Exit_button.gd" id="7_oltrp"]
 [ext_resource type="AudioStream" uid="uid://20odx86cypp4" path="res://SFX/Crystal Cavern.ogg" id="8_67b70"]
+[ext_resource type="Script" uid="uid://0ttq31ogi5up" path="res://Scripts/AudioDebugger.gd" id="11_opny4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxg3m"]
 texture = ExtResource("1_glfsf")
@@ -180,6 +181,9 @@ stream = ExtResource("8_67b70")
 autoplay = true
 bus = &"Music"
 parameters/looping = true
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("11_opny4")
 
 [connection signal="pressed" from="VBoxContainer/Start" to="VBoxContainer/Start" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/Leaderboard" to="VBoxContainer/Leaderboard" method="_on_pressed"]
