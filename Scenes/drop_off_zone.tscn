@@ -11,11 +11,3 @@ script = ExtResource("1_vdgsb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(147.5, 52)
 shape = SubResource("RectangleShape2D_16rcd")
-
-[node name="SuccessLabel" type="CanvasLayer" parent="."]
-
-[node name="SuccessLabel" type="Label" parent="SuccessLabel"]
-offset_right = 15.0
-offset_bottom = 23.0
-theme_override_font_sizes/font_size = 20
-text = "Success"

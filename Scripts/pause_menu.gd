@@ -37,5 +37,6 @@ func _process(delta):
 	testEsc()
 
 
-#func _on_exit_pressed():
-	#reset_game()
+func _on_exit_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/Title_screen.tscn")

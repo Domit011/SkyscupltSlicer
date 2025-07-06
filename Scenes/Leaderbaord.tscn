@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://4svaenkjr60g"]
+[gd_scene load_steps=7 format=3 uid="uid://4svaenkjr60g"]
 
-[ext_resource type="Texture2D" uid="uid://bvdpjtxykjt7y" path="res://Sprites/UI/back-arrow-png.png" id="1_26rm0"]
-[ext_resource type="Script" uid="uid://88o3w2xx0tka" path="res://Scripts/LeaderboardMeny.gd" id="1_xc5bo"]
+[ext_resource type="Script" uid="uid://88o3w2xx0tka" path="res://Scripts/LeaderboardMenu.gd" id="1_xc5bo"]
 [ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_1pumy"]
+[ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="2_5p4t1"]
+[ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="2_xc5bo"]
+[ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="5_oje66"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oje66"]
+texture = ExtResource("2_5p4t1")
+modulate_color = Color(0.779291, 0.779291, 0.779291, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -13,10 +19,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xc5bo")
 
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_oje66")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+offset_right = 520.0
+offset_bottom = 520.0
 scale = Vector2(0.185908, 0.185908)
 
 [node name="Button" type="Button" parent="VBoxContainer"]
@@ -25,8 +40,15 @@ theme_override_colors/font_hover_color = Color(0.18359, 0.18359, 0.18359, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.18359, 0.18359, 0.18359, 1)
 theme_override_colors/font_pressed_color = Color(0.18359, 0.18359, 0.18359, 1)
-icon = ExtResource("1_26rm0")
+icon = ExtResource("2_xc5bo")
 flat = true
 script = ExtResource("2_1pumy")
+
+[node name="LeaderboardLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 228.0
+offset_bottom = 164.0
+theme_override_fonts/font = ExtResource("5_oje66")
+theme_override_font_sizes/font_size = 60
 
 [connection signal="pressed" from="VBoxContainer/Button" to="VBoxContainer/Button" method="_on_pressed"]

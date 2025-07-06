@@ -3,8 +3,6 @@ extends Node2D
 var has_item = false
 var score: float = 0.0
 var is_game_over: bool = false
-# Leaderboard file path
-const LEADERBOARD_FILE: String = "user://leaderboard.json"
 
 # Node references (assign these in the editor or code)
 @onready var player: CharacterBody2D = $Player
@@ -12,11 +10,10 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var score_label: Label = $UI/ScoreLabel
 @onready var death_screen: Control = $UI/DeathScreen
 @onready var final_score_label: Label = $UI/DeathScreen/FinalScoreLabel
-@onready var leaderboard_label: Label = $UI/DeathScreen/LeaderboardLabel
 @onready var restart_button: Button = $UI/DeathScreen/RestartButton
 @onready var section_manager: SectionManager = $SectionManager
 @onready var input_display_tilemap: TileMap = $UI/InputDisplayTileMap
-@onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer  # Adjust path as needed
+@onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
 # Inventory UI
 @onready var inventory_label: Label = $UI/InventoryLabel
 
@@ -35,9 +32,6 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 @onready var input_3: TextureRect = $UI2/PatternContainer/Input3
 @onready var input_4: TextureRect = $UI2/PatternContainer/Input4
 
-# Leaderboard data
-var leaderboard: Array = []
-
 # Input system variables
 var input_array : Array[String] = []
 var current_craft_request: Array[String] = []
@@ -53,12 +47,12 @@ var is_crafting_active: bool = true
 
 func _ready() -> void:
 	if audio_player and audio_player.stream:
-		audio_player.stream.loop = true  # For most audio formats
+		audio_player.stream.loop = true
 		audio_player.play()
 
 	# Stop menu music when entering game
 	AudioManager.stop_menu_music()
-	# ... rest of your game _ready() code
+	
 	# Unpause game
 	get_tree().paused = false
 	# Initialize game state
@@ -66,9 +60,6 @@ func _ready() -> void:
 	# Generate first random sequence
 	generate_random_sequence()
 	call_deferred("update_pattern_list")
-	# Load leaderboard from file
-	load_leaderboard()
-	
 	
 	# Connect signals with null checks
 	if restart_button:
@@ -77,7 +68,6 @@ func _ready() -> void:
 		print("Error: restart_button not found!")
 	
 	if obstacle:
-		# Make sure the obstacle signal is connected properly
 		if obstacle.has_signal("body_entered"):
 			obstacle.connect("body_entered", Callable(self, "_on_obstacle_body_entered"))
 			print("✅ Obstacle collision signal connected successfully")
@@ -89,7 +79,7 @@ func _ready() -> void:
 	# Position UI elements
 	setup_ui_positions()
 	
-	# Connect player delivery signal - Fixed signal connection
+	# Connect player delivery signal
 	if player and player.has_signal("item_delivered"):
 		player.connect("item_delivered", Callable(self, "_on_item_delivered"))
 		print("✅ Player delivery signal connected successfully")
@@ -139,8 +129,9 @@ func update_inventory_display() -> void:
 		if player_inventory.size() == 0:
 			inventory_text += "Empty"
 		else:
-			inventory_label.text = inventory_text
-
+			inventory_text += "%d items" % player_inventory.size()
+		inventory_label.text = inventory_text
+		
 func add_item_to_inventory(item_name: String) -> bool:
 	"""Add an item to player inventory. Returns true if successful."""
 	if player_inventory.size() < max_inventory_size:
@@ -157,7 +148,7 @@ func _on_item_delivered() -> void:
 	print("🔔 _on_item_delivered() function called!")
 	print("📦 Current inventory size: ", player_inventory.size())
 	print("📦 Current inventory contents: ", player_inventory)
-	
+	score += 100
 	if player_inventory.size() > 0:
 		# Check if inventory was full before delivery
 		var was_inventory_full = (player_inventory.size() == max_inventory_size)
@@ -187,7 +178,8 @@ func _on_item_delivered() -> void:
 	else:
 		print("❌ No items in inventory to deliver!")
 		print("💀 Game Over - No items to deliver!")
-		game_over()  # Add this line!
+		game_over()
+
 func update_pattern_list():
 	"""Update the visual pattern display"""
 	# Define texture mappings for complete and incomplete states
@@ -266,24 +258,28 @@ func game_over() -> void:
 	is_game_over = true
 	is_crafting_active = false
 	
-	# Save score to leaderboard
-	save_to_leaderboard(int(score))
+	# Save the score to leaderboard file
+	save_score_to_leaderboard(int(score))
 	
-	if death_screen and final_score_label and leaderboard_label and score_label:
+	if death_screen and final_score_label and score_label:
 		# Position deathscreen at top middle
 		var viewport_size = get_viewport_rect().size
 		death_screen.position = Vector2(viewport_size.x / 2, 20)
 		death_screen.pivot_offset = Vector2(death_screen.size.x / 2, 0)
 		
-		# Show death screen
+		# Show death screen with final score
 		final_score_label.text = "Final Score: %d" % int(score)
-		update_leaderboard_display()
 		death_screen.visible = true
 		score_label.visible = false
 	else:
 		print("❌ ERROR: Missing UI elements for game over screen!")
 
-func load_leaderboard() -> void:
+func save_score_to_leaderboard(new_score: int) -> void:
+	"""Save score to leaderboard file"""
+	const LEADERBOARD_FILE: String = "user://leaderboard.json"
+	var leaderboard: Array = []
+	
+	# Load existing leaderboard
 	var file = FileAccess.open(LEADERBOARD_FILE, FileAccess.READ)
 	if file:
 		var json = JSON.new()
@@ -291,26 +287,21 @@ func load_leaderboard() -> void:
 		if error == OK and json.data is Array:
 			leaderboard = json.data
 		file.close()
-	else:
-		leaderboard = []
-
-func save_to_leaderboard(new_score: int) -> void:
+	
+	# Add new score and sort
 	leaderboard.append(new_score)
 	leaderboard.sort()
 	leaderboard.reverse()
 	if leaderboard.size() > 5:
 		leaderboard.resize(5)
-	var file = FileAccess.open(LEADERBOARD_FILE, FileAccess.WRITE)
+	
+	# Save updated leaderboard
+	file = FileAccess.open(LEADERBOARD_FILE, FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(leaderboard))
 		file.close()
-
-func update_leaderboard_display() -> void:
-	if leaderboard_label:
-		var text = "Leaderboard:\n"
-		for i in range(leaderboard.size()):
-			text += "%d. %d\n" % [i + 1, leaderboard[i]]
-		leaderboard_label.text = text
+	
+	print("💾 Score saved to leaderboard: ", new_score)
 
 func _on_restart_button_pressed() -> void:
 	if section_manager:
