@@ -29,7 +29,7 @@ radius = 65.9219
 radius = 35.6305
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(0.32, 0.32)
+scale = Vector2(0.477415, 0.477415)
 script = ExtResource("1_rpqav")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

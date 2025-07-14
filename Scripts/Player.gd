@@ -8,6 +8,7 @@ extends CharacterBody2D
 # Signal for item delivery
 signal item_delivered
 func _ready() -> void:
+	print("Player Position:  " , global_position,"   " ,position)
 	# Debug prints to find the game manager
 	print("🔍 Player node path: ", get_path())
 	print("🔍 Player parent: ", get_parent())

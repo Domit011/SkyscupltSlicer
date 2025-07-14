@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3ik7djlndy5t"]
+[gd_scene load_steps=18 format=3 uid="uid://3ik7djlndy5t"]
 
 [ext_resource type="Script" uid="uid://bejfkbc7y8m8k" path="res://Scripts/Game.gd" id="1_o85vq"]
 [ext_resource type="Texture2D" uid="uid://uxy78dvyfp65" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (White)/tile_0438.png" id="2_hhruo"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://chtyd0prhvn1w" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0440.png" id="7_ivh21"]
 [ext_resource type="Texture2D" uid="uid://dgt5f1xywewad" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0441.png" id="8_7j4o8"]
 [ext_resource type="Texture2D" uid="uid://duhi08l6wn6u2" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (Black)/tile_0439.png" id="9_v0h0j"]
+[ext_resource type="Texture2D" uid="uid://dtidk7omvbw74" path="res://Sprites/backgrounds/noonbackground.png" id="13_6a11l"]
+[ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="14_hhruo"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_o85vq")
@@ -43,19 +45,37 @@ offset_right = 40.0
 offset_bottom = 23.0
 metadata/_edit_use_anchors_ = true
 
+[node name="InventoryLabel" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="DeathScreen" type="Control" parent="UI"]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
 
-[node name="FinalScoreLabel" type="Label" parent="UI/DeathScreen"]
+[node name="TextureRect" type="TextureRect" parent="UI/DeathScreen"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-metadata/_edit_use_anchors_ = true
+offset_right = 1159.0
+offset_bottom = 768.0
+texture = ExtResource("13_6a11l")
+
+[node name="FinalScoreLabel" type="Label" parent="UI/DeathScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("14_hhruo")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
 
 [node name="LeaderboardLabel" type="Label" parent="UI/DeathScreen"]
 layout_mode = 0
@@ -69,10 +89,6 @@ offset_right = 8.0
 offset_bottom = 8.0
 scale = Vector2(14.9473, 15.0442)
 metadata/_edit_use_anchors_ = true
-
-[node name="InventoryLabel" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 23.0
 
 [node name="Player" parent="." instance=ExtResource("2_m0g8t")]
 position = Vector2(578, 604)

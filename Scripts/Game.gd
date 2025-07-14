@@ -264,8 +264,8 @@ func game_over() -> void:
 	if death_screen and final_score_label and score_label:
 		# Position deathscreen at top middle
 		var viewport_size = get_viewport_rect().size
-		death_screen.position = Vector2(viewport_size.x / 2, 20)
-		death_screen.pivot_offset = Vector2(death_screen.size.x / 2, 0)
+		final_score_label.position = Vector2(viewport_size.x / 2, 0)
+		#death_screen.pivot_offset = Vector2(death_screen.size.x / 2, 0)
 		
 		# Show death screen with final score
 		final_score_label.text = "Final Score: %d" % int(score)
