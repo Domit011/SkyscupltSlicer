@@ -1,4 +1,5 @@
 extends Node2D
+
 # Score variables
 var has_item = false
 var score: float = 0.0
@@ -11,21 +12,22 @@ var is_game_over: bool = false
 @onready var death_screen: Control = $UI/DeathScreen
 @onready var final_score_label: Label = $UI/DeathScreen/FinalScoreLabel
 @onready var restart_button: Button = $UI/DeathScreen/RestartButton
-@onready var section_manager: SectionManager = $SectionManager
+@onready var section_manager: Node = $SectionManager  # Relaxed type to avoid errors
 @onready var input_display_tilemap: TileMap = $UI/InputDisplayTileMap
 @onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var loselabel: Label = $UI/DeathScreen/loselabel
 # Inventory UI
 @onready var inventory_label: Label = $UI/InventoryLabel
 
 @export_group("Tile Graphics")
-@export var tile_up : Texture2D
-@export var tile_down : Texture2D
-@export var tile_left : Texture2D
-@export var tile_right : Texture2D
-@export var c_tile_up : Texture2D
-@export var c_tile_down : Texture2D
-@export var c_tile_left : Texture2D
-@export var c_tile_right : Texture2D
+@export var tile_up: Texture2D
+@export var tile_down: Texture2D
+@export var tile_left: Texture2D
+@export var tile_right: Texture2D
+@export var c_tile_up: Texture2D
+@export var c_tile_down: Texture2D
+@export var c_tile_left: Texture2D
+@export var c_tile_right: Texture2D
 
 @onready var input_1: TextureRect = $UI2/PatternContainer/Input1
 @onready var input_2: TextureRect = $UI2/PatternContainer/Input2
@@ -33,7 +35,7 @@ var is_game_over: bool = false
 @onready var input_4: TextureRect = $UI2/PatternContainer/Input4
 
 # Input system variables
-var input_array : Array[String] = []
+var input_array: Array[String] = []
 var current_craft_request: Array[String] = []
 var available_directions = ["left", "right", "up", "down"]
 var sequence_length: int = 4
@@ -49,23 +51,34 @@ func _ready() -> void:
 	if audio_player and audio_player.stream:
 		audio_player.stream.loop = true
 		audio_player.play()
+	else:
+		print("❌ ERROR: AudioPlayer or stream not found!")
 
 	# Stop menu music when entering game
-	AudioManager.stop_menu_music()
-	
+	if AudioManager:
+		AudioManager.stop_menu_music()
+	else:
+		print("❌ ERROR: AudioManager not found!")
+
 	# Unpause game
 	get_tree().paused = false
-	# Initialize game state
-	reset_game()
-	# Generate first random sequence
-	generate_random_sequence()
-	call_deferred("update_pattern_list")
 	
-	# Connect signals with null checks
-	if restart_button:
-		restart_button.connect("pressed", Callable(self, "_on_restart_button_pressed"))
+	# Ensure death screen and restart button process input even when paused
+	if death_screen:
+		death_screen.process_mode = Node.PROCESS_MODE_ALWAYS
+		print("✅ DeathScreen process_mode set to PROCESS_MODE_ALWAYS")
 	else:
-		print("Error: restart_button not found!")
+		print("❌ ERROR: DeathScreen not found!")
+	
+	if restart_button:
+		restart_button.process_mode = Node.PROCESS_MODE_ALWAYS
+		# Disconnect any existing connections to avoid duplicates
+		if restart_button.is_connected("pressed", Callable(self, "_on_restart_button_pressed")):
+			restart_button.disconnect("pressed", Callable(self, "_on_restart_button_pressed"))
+		restart_button.connect("pressed", Callable(self, "_on_restart_button_pressed"))
+		print("✅ Restart button signal connected successfully")
+	else:
+		print("❌ ERROR: restart_button not found! Please check node path: $UI/DeathScreen/RestartButton in the scene tree")
 	
 	if obstacle:
 		if obstacle.has_signal("body_entered"):
@@ -74,7 +87,7 @@ func _ready() -> void:
 		else:
 			print("❌ ERROR: Obstacle doesn't have body_entered signal!")
 	else:
-		print("Error: obstacle not found!")
+		print("❌ ERROR: obstacle not found!")
 	
 	# Position UI elements
 	setup_ui_positions()
@@ -85,6 +98,13 @@ func _ready() -> void:
 		print("✅ Player delivery signal connected successfully")
 	else:
 		print("❌ WARNING: Player node not found or doesn't have item_delivered signal!")
+	
+	# Initialize game state
+	reset_game()
+	
+	# Generate first random sequence
+	generate_random_sequence()
+	call_deferred("update_pattern_list")
 
 func setup_ui_positions() -> void:
 	"""Setup UI element positions"""
@@ -121,6 +141,8 @@ func _physics_process(delta: float) -> void:
 func update_score_display() -> void:
 	if score_label:
 		score_label.text = "Score: %d" % int(score)
+	else:
+		print("❌ ERROR: score_label not found in update_score_display!")
 
 func update_inventory_display() -> void:
 	"""Update the inventory display UI"""
@@ -131,7 +153,9 @@ func update_inventory_display() -> void:
 		else:
 			inventory_text += "%d items" % player_inventory.size()
 		inventory_label.text = inventory_text
-		
+	else:
+		print("❌ ERROR: inventory_label not found in update_inventory_display!")
+
 func add_item_to_inventory(item_name: String) -> bool:
 	"""Add an item to player inventory. Returns true if successful."""
 	if player_inventory.size() < max_inventory_size:
@@ -148,7 +172,6 @@ func _on_item_delivered() -> void:
 	print("🔔 _on_item_delivered() function called!")
 	print("📦 Current inventory size: ", player_inventory.size())
 	print("📦 Current inventory contents: ", player_inventory)
-	score += 100
 	if player_inventory.size() > 0:
 		# Check if inventory was full before delivery
 		var was_inventory_full = (player_inventory.size() == max_inventory_size)
@@ -180,7 +203,7 @@ func _on_item_delivered() -> void:
 		print("💀 Game Over - No items to deliver!")
 		game_over()
 
-func update_pattern_list():
+func update_pattern_list() -> void:
 	"""Update the visual pattern display"""
 	# Define texture mappings for complete and incomplete states
 	var texture_mappings = {
@@ -221,33 +244,53 @@ func update_pattern_list():
 				input_nodes[i].texture = texture_mappings["complete"][direction]
 
 func reset_game() -> void:
+	print("🔄 Resetting game state...")
 	# Unpause game
 	get_tree().paused = false
+	
 	# Reset score and game state
 	score = 0.0
 	is_game_over = false
 	is_crafting_active = true
 	player_inventory.clear()
 	input_array.clear()
+	current_craft_request.clear()  # Ensure craft request is cleared
 	update_score_display()
 	update_inventory_display()
 	
 	# Reset player position
 	if player:
 		player.position = Vector2(600, -650)
+	else:
+		print("❌ ERROR: Player node not found during reset!")
 	
 	if score_label:
 		score_label.visible = true
+	else:
+		print("❌ ERROR: Score label not found during reset!")
 		
 	# Hide death screen
 	if death_screen:
 		death_screen.visible = false
+	else:
+		print("❌ ERROR: Death screen not found during reset!")
 		
+	# Reset section manager
 	if section_manager:
-		section_manager.reset()
+		if section_manager.has_method("reset"):
+			section_manager.reset()
+			print("✅ Section manager reset successfully")
+		elif section_manager.get("sections") != null and section_manager.get("sections") is Array:
+			section_manager.sections.clear()
+			print("✅ Section manager sections cleared directly")
+		else:
+			print("❌ ERROR: SectionManager does not have reset method or sections property!")
+	else:
+		print("❌ ERROR: section_manager not found during reset!")
 	
 	# Generate new sequence when game resets
 	generate_random_sequence()
+	print("✅ Game reset complete")
 
 func game_over() -> void:
 	if is_game_over:
@@ -262,11 +305,6 @@ func game_over() -> void:
 	save_score_to_leaderboard(int(score))
 	
 	if death_screen and final_score_label and score_label:
-		# Position deathscreen at top middle
-		var viewport_size = get_viewport_rect().size
-		final_score_label.position = Vector2(viewport_size.x / 2, 0)
-		#death_screen.pivot_offset = Vector2(death_screen.size.x / 2, 0)
-		
 		# Show death screen with final score
 		final_score_label.text = "Final Score: %d" % int(score)
 		death_screen.visible = true
@@ -304,8 +342,7 @@ func save_score_to_leaderboard(new_score: int) -> void:
 	print("💾 Score saved to leaderboard: ", new_score)
 
 func _on_restart_button_pressed() -> void:
-	if section_manager:
-		section_manager.sections.clear()
+	print("🔄 Restart button pressed!")
 	reset_game()
 
 func _on_obstacle_body_entered(body: Node2D) -> void:

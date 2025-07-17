@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://buddhhlqnx11k"]
+[gd_scene load_steps=11 format=3 uid="uid://buddhhlqnx11k"]
 
 [ext_resource type="Script" uid="uid://bv2w6kgnt1862" path="res://Scripts/moving_object.gd" id="1_a0fks"]
 [ext_resource type="Texture2D" uid="uid://bhv5urvs842ge" path="res://Sprites/Obstacles/DeWatermark.ai_1750031190211-removebg-preview.png" id="1_jbjhu"]
+[ext_resource type="AudioStream" uid="uid://cifm0d2w8uxrp" path="res://SFX/crow_caw.wav" id="3_io0ql"]
+[ext_resource type="Script" uid="uid://8jfpcd0f6a4g" path="res://Scripts/Seagull.gd" id="4_ov1p1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jbjhu"]
 size = Vector2(38, 20)
@@ -64,3 +66,9 @@ frame_progress = 0.856944
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(3, 13)
 shape = SubResource("RectangleShape2D_jbjhu")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_io0ql")
+script = ExtResource("4_ov1p1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
