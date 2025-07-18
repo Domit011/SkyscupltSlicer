@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://bdnkhgt65tjn5"]
 
 [ext_resource type="Script" uid="uid://clplb6e6w54m1" path="res://Scripts/MainMenu.gd" id="1_c1gdy"]
-[ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="1_glfsf"]
+[ext_resource type="Texture2D" uid="uid://c273ju8axwwyv" path="res://Sprites/backgrounds/ChatGPT Image Jul 18, 2025, 12_55_04 PM.png" id="2_opny4"]
 [ext_resource type="FontFile" uid="uid://b1s7se5rvlegj" path="res://Fonts/kingthings-bloone-font/KingthingsBloone-3926.ttf" id="2_wou8e"]
 [ext_resource type="Script" uid="uid://buxqndjhqu17b" path="res://Scripts/play_button.gd" id="3_s30q0"]
 [ext_resource type="Script" uid="uid://bcfd72bx2w44t" path="res://Scripts/Leadboard_button.gd" id="4_wou8e"]
@@ -13,11 +13,11 @@
 [ext_resource type="Script" uid="uid://0ttq31ogi5up" path="res://Scripts/AudioDebugger.gd" id="11_opny4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxg3m"]
-texture = ExtResource("1_glfsf")
+texture = ExtResource("2_opny4")
 modulate_color = Color(0.779291, 0.779291, 0.779291, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wd5bn"]
-bg_color = Color(0.744188, 0.999515, 1, 1)
+bg_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -50,10 +50,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -125.5
-offset_top = -104.5
-offset_right = 125.5
-offset_bottom = 104.5
+offset_left = -119.0
+offset_top = -77.0
+offset_right = 375.0
+offset_bottom = 141.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
@@ -61,11 +61,11 @@ theme_override_constants/separation = 10
 [node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_hover_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_colors/font_color = Color(0, 0.490384, 0.619483, 1)
-theme_override_colors/font_focus_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_colors/font_pressed_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_fonts/font = ExtResource("2_wou8e")
+theme_override_colors/font_hover_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_colors/font_color = Color(0.994789, 0.673662, 0.225927, 1)
+theme_override_colors/font_focus_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_colors/font_pressed_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_fonts/font = ExtResource("7_mdm14")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wd5bn")
@@ -81,11 +81,11 @@ script = ExtResource("3_s30q0")
 [node name="Leaderboard" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_hover_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_colors/font_color = Color(0, 0.490384, 0.619483, 1)
-theme_override_colors/font_focus_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_colors/font_pressed_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_fonts/font = ExtResource("2_wou8e")
+theme_override_colors/font_hover_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_colors/font_color = Color(0.994789, 0.673662, 0.225927, 1)
+theme_override_colors/font_focus_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_colors/font_pressed_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_fonts/font = ExtResource("7_mdm14")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wd5bn")
@@ -101,11 +101,11 @@ script = ExtResource("4_wou8e")
 [node name="Settings" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_hover_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_colors/font_color = Color(0, 0.490384, 0.619483, 1)
-theme_override_colors/font_focus_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_colors/font_pressed_color = Color(3.36915e-07, 0.415055, 0.526323, 1)
-theme_override_fonts/font = ExtResource("2_wou8e")
+theme_override_colors/font_hover_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_colors/font_color = Color(0.994789, 0.673662, 0.225927, 1)
+theme_override_colors/font_focus_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_colors/font_pressed_color = Color(0.579557, 0.367431, 0.0103545, 1)
+theme_override_fonts/font = ExtResource("7_mdm14")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wd5bn")
@@ -119,6 +119,7 @@ text = "Settings"
 script = ExtResource("5_75exb")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -139,10 +140,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -329.5
-offset_top = -160.0
-offset_right = 329.5
-offset_bottom = -110.0
+offset_left = -158.0
+offset_top = -150.0
+offset_right = 501.0
+offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("7_mdm14")
