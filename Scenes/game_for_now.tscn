@@ -57,24 +57,28 @@ offset_right = 976.0
 offset_bottom = 90.0
 
 [node name="Input1" type="TextureRect" parent="SectionManager/UI2/PatternContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("6_dgqmq")
 stretch_mode = 4
 
 [node name="Input2" type="TextureRect" parent="SectionManager/UI2/PatternContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("7_ivh21")
 stretch_mode = 4
 
 [node name="Input3" type="TextureRect" parent="SectionManager/UI2/PatternContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("8_7j4o8")
 stretch_mode = 4
 
 [node name="Input4" type="TextureRect" parent="SectionManager/UI2/PatternContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 texture = ExtResource("9_v0h0j")

@@ -29,10 +29,10 @@ var is_game_over: bool = false
 @export var c_tile_left: Texture2D
 @export var c_tile_right: Texture2D
 
-@onready var input_1: TextureRect = $UI2/PatternContainer/Input1
-@onready var input_2: TextureRect = $UI2/PatternContainer/Input2
-@onready var input_3: TextureRect = $UI2/PatternContainer/Input3
-@onready var input_4: TextureRect = $UI2/PatternContainer/Input4
+@onready var input_1: TextureRect = %Input1
+@onready var input_2: TextureRect = %Input2
+@onready var input_3: TextureRect = %Input3
+@onready var input_4: TextureRect = %Input4
 
 # Input system variables
 var input_array: Array[String] = []
