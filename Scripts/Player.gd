@@ -3,10 +3,13 @@ extends CharacterBody2D
 # Movement variables
 @export var move_speed: float = 400.0 # Left-right speed in pixels/second
 @export var upward_speed: float = 100.0 # Upward speed in pixels/second
+@export var tilt_angle: float = 15.0 # Tilt angle in degrees
+@export var tilt_speed: float = 5.0 # How fast the player tilts (higher = faster)
 @export var game_manager : Node2D
 
 # Signal for item delivery
 signal item_delivered
+
 func _ready() -> void:
 	print("Player Position:  " , global_position,"   " ,position)
 	# Debug prints to find the game manager
@@ -41,6 +44,17 @@ func _physics_process(delta: float) -> void:
 	
 	# Apply constant upward movement
 	velocity.y = -upward_speed # Negative because Godot's Y-axis is down
+	
+	# Handle tilting based on movement direction
+	var target_rotation = 0.0
+	if direction < 0: # Moving left
+		target_rotation = deg_to_rad(-tilt_angle)
+	elif direction > 0: # Moving right
+		target_rotation = deg_to_rad(tilt_angle)
+	# If direction == 0, target_rotation stays 0 (upright)
+	
+	# Smoothly interpolate to the target rotation
+	rotation = lerp_angle(rotation, target_rotation, tilt_speed * delta)
 	
 	# Set the velocity and move
 	self.velocity = velocity

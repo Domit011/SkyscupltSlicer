@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="5_w38ri"]
 [ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="7_mdm14"]
 [ext_resource type="Script" uid="uid://b4i2ql75plw3v" path="res://Scripts/Exit_button.gd" id="7_oltrp"]
-[ext_resource type="AudioStream" uid="uid://20odx86cypp4" path="res://SFX/Crystal Cavern.ogg" id="8_67b70"]
+[ext_resource type="AudioStream" uid="uid://20odx86cypp4" path="res://SFX/Music/Crystal Cavern.ogg" id="8_67b70"]
 [ext_resource type="Script" uid="uid://0ttq31ogi5up" path="res://Scripts/AudioDebugger.gd" id="11_opny4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sxg3m"]

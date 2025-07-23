@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://co6s6qel5ayi7"
+path="res://.godot/imported/WE Thunder 21.wav-ccd58b7e966eaed095243acf0f587858.sample"
+
+[deps]
+
+source_file="res://SFX/Weather Elements/WE Thunder 21.wav"
+dest_files=["res://.godot/imported/WE Thunder 21.wav-ccd58b7e966eaed095243acf0f587858.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

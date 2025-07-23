@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dob3l41dwur83"
+path="res://.godot/imported/WE Heavy Inside Rain 3.wav-8cdf0341f74f729f35db660fc930d31b.sample"
+
+[deps]
+
+source_file="res://SFX/Weather Elements/WE Heavy Inside Rain 3.wav"
+dest_files=["res://.godot/imported/WE Heavy Inside Rain 3.wav-8cdf0341f74f729f35db660fc930d31b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

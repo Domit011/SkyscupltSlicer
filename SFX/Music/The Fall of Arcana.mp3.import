@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cb5gy0y2mw87d"
+path="res://.godot/imported/The Fall of Arcana.mp3-2af325ed7f2cbe7036371aa18a9e399a.mp3str"
+
+[deps]
+
+source_file="res://SFX/Music/The Fall of Arcana.mp3"
+dest_files=["res://.godot/imported/The Fall of Arcana.mp3-2af325ed7f2cbe7036371aa18a9e399a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
