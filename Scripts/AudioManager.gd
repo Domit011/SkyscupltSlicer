@@ -24,7 +24,7 @@ func _ready() -> void:
 	add_child(sfx_player)
 	
 	# Load your menu music
-	menu_music_resource = preload("res://SFX/Crystal Cavern.ogg")
+	menu_music_resource = preload("res://SFX/Music/Crystal Cavern.ogg")
 	menu_music_player.stream = menu_music_resource
 	menu_music_player.stream.loop = true
 	

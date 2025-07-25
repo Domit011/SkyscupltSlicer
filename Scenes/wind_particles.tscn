@@ -1,29 +1,53 @@
-[gd_scene load_steps=5 format=3 uid="uid://l6s6jdqv8e18"]
+[gd_scene load_steps=8 format=3 uid="uid://l6s6jdqv8e18"]
 
-[ext_resource type="Texture2D" uid="uid://ijrqj2knseqf" path="res://Sprites/icon.svg" id="1_hcmyh"]
+[ext_resource type="Texture2D" uid="uid://qnukqfqn32hc" path="res://Sprites/UI/minimap_icon_jewel_white.png" id="1_hcmyh"]
 
-[sub_resource type="Curve" id="Curve_b8vue"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.535411, 0.587416), 0.0, 0.0, 0, 0, Vector2(0.937677, 0.232739), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_hcmyh"]
+_data = [Vector2(0, 0.196548), 0.0, 0.0, 0, 0, Vector2(0.524079, 0.436295), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="CurveTexture" id="CurveTexture_b8vue"]
+curve = SubResource("Curve_hcmyh")
+
+[sub_resource type="Curve" id="Curve_gupoe"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_b8vue"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.249292, 1), 0.0, 0.0, 0, 0, Vector2(0.509915, -1), 0.0, 0.0, 0, 0, Vector2(0.747875, 1), 0.0, 0.0, 0, 0, Vector2(0.997167, 0.00111365), 0.0, 0.0, 0, 0]
+point_count = 5
+
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gupoe"]
+curve_x = SubResource("Curve_gupoe")
 curve_y = SubResource("Curve_b8vue")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xyfbk"]
 particle_flag_disable_z = true
-emission_shape_scale = Vector3(500, 300, 1)
+emission_shape_scale = Vector3(1000, 1500, 1)
 spread = 0.0
-initial_velocity_min = 30.0
+initial_velocity_min = 50.0
 initial_velocity_max = 50.0
 directional_velocity_min = 20.0
 directional_velocity_max = 50.0
 directional_velocity_curve = SubResource("CurveXYZTexture_gupoe")
 gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.5
+alpha_curve = SubResource("CurveTexture_b8vue")
+turbulence_noise_strength = 0.0
+turbulence_noise_scale = 0.0
 
 [node name="GPUParticles2D" type="GPUParticles2D"]
-amount = 4
+scale = Vector2(4.42006, 4.42006)
+amount = 6
 texture = ExtResource("1_hcmyh")
 lifetime = 5.0
+fixed_fps = 60
+interpolate = false
 trail_enabled = true
 trail_lifetime = 0.5
+trail_sections = 96
+trail_section_subdivisions = 96
 process_material = SubResource("ParticleProcessMaterial_xyfbk")

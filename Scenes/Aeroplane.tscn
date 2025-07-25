@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bc8nkn0yccdih"]
+
+[ext_resource type="Script" uid="uid://bv2w6kgnt1862" path="res://Scripts/moving_object.gd" id="1_d7hn3"]
+[ext_resource type="AudioStream" uid="uid://cifm0d2w8uxrp" path="res://SFX/crow_caw.wav" id="3_mprty"]
+[ext_resource type="Texture2D" uid="uid://3o3gafgeba8d" path="res://Sprites/Obstacles/military-aircraft-side-view-icon-aviation-fighter-jet-war-plane-isolated-bomber-force-cartoon-navy-warfare-machine-vector-removebg-preview.png" id="4_d7hn3"]
+[ext_resource type="Script" uid="uid://8jfpcd0f6a4g" path="res://Scripts/Seagull.gd" id="4_u8f0h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jbjhu"]
+size = Vector2(311.111, 58.3333)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+scale = Vector2(0.36, 0.36)
+script = ExtResource("1_d7hn3")
+min_speed = 100.0
+max_speed = 125.0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(47.2222, 29.1666)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_jbjhu")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(3, 13)
+shape = SubResource("RectangleShape2D_jbjhu")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_mprty")
+script = ExtResource("4_u8f0h")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("4_d7hn3")

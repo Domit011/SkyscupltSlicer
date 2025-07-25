@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://8jfpcd0f6a4g" path="res://Scripts/Seagull.gd" id="4_ov1p1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jbjhu"]
-size = Vector2(38, 20)
+size = Vector2(311.111, 58.3333)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a0fks"]
 atlas = ExtResource("1_jbjhu")

@@ -1,10 +1,79 @@
-[gd_scene load_steps=5 format=3 uid="uid://blbhglbc7lp4h"]
+[gd_scene load_steps=19 format=3 uid="uid://blbhglbc7lp4h"]
 
 [ext_resource type="Script" uid="uid://birgik37skaj4" path="res://Scripts/section.gd" id="1_a7tme"]
 [ext_resource type="Texture2D" uid="uid://djtcvxp50eene" path="res://Sprites/backgrounds/New Piskel-1.png.png" id="2_a7tme"]
 [ext_resource type="Texture2D" uid="uid://ijrqj2knseqf" path="res://Sprites/icon.svg" id="3_7danf"]
+[ext_resource type="Texture2D" uid="uid://cll3mag13fsh8" path="res://Sprites/npc/Male adventurer/Tilesheet/character_maleAdventurer_sheet.png" id="4_iklve"]
+[ext_resource type="PackedScene" uid="uid://l6s6jdqv8e18" path="res://Scenes/wind_particles.tscn" id="4_l1mxo"]
+[ext_resource type="Texture2D" uid="uid://c4xs77t8h2tlr" path="res://Sprites/stuff'n'things/Blue-cloud-clipart-PNG-removebg-preview.png" id="5_rie68"]
+[ext_resource type="PackedScene" uid="uid://bj3ewep81q6a1" path="res://Scenes/drop_off_zone.tscn" id="6_orm2k"]
+[ext_resource type="PackedScene" uid="uid://bc8nkn0yccdih" path="res://Scenes/Aeroplane.tscn" id="8_rie68"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l8g4o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wqkq"]
+atlas = ExtResource("4_iklve")
+region = Rect2(0, 0, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cjqy"]
+atlas = ExtResource("4_iklve")
+region = Rect2(96, 0, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xekq1"]
+atlas = ExtResource("4_iklve")
+region = Rect2(192, 0, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0o488"]
+atlas = ExtResource("4_iklve")
+region = Rect2(288, 0, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xekc0"]
+atlas = ExtResource("4_iklve")
+region = Rect2(0, 0, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_accqo"]
+atlas = ExtResource("4_iklve")
+region = Rect2(288, 256, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fdi6"]
+atlas = ExtResource("4_iklve")
+region = Rect2(0, 0, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhy46"]
+atlas = ExtResource("4_iklve")
+region = Rect2(288, 256, 96, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iklve"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wqkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cjqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xekq1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0o488")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xekc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_accqo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fdi6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhy46")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
 
 [node name="Section2" type="Node2D"]
 script = ExtResource("1_a7tme")
@@ -45,3 +114,33 @@ shape = SubResource("RectangleShape2D_l8g4o")
 position = Vector2(-6911.99, 324.5)
 scale = Vector2(57.6, 32.25)
 rect = Rect2(120, -10, 20, 20)
+
+[node name="GPUParticles2D" parent="." instance=ExtResource("4_l1mxo")]
+position = Vector2(-34, 318)
+
+[node name="cloud and npc" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="cloud and npc"]
+position = Vector2(778, 337)
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="cloud and npc/Area2D"]
+position = Vector2(249, 180)
+polygon = PackedVector2Array(-13, -36, -8, -42, 13, -49, 18, -8, 49, 19, 65, 49, -97, 54, -77, 27, -22, -1, -13, -26)
+
+[node name="NPC" type="AnimatedSprite2D" parent="cloud and npc/Area2D"]
+position = Vector2(248, 147)
+scale = Vector2(0.458333, 0.458333)
+sprite_frames = SubResource("SpriteFrames_iklve")
+autoplay = "default"
+
+[node name="cloud" type="Sprite2D" parent="cloud and npc/Area2D"]
+position = Vector2(235, 200)
+scale = Vector2(0.301386, 0.301386)
+texture = ExtResource("5_rie68")
+
+[node name="DropOffZone" parent="cloud and npc" instance=ExtResource("6_orm2k")]
+position = Vector2(843, 468)
+
+[node name="Aeroplane" parent="." groups=["Obstacle"] instance=ExtResource("8_rie68")]
+position = Vector2(79, 308)
