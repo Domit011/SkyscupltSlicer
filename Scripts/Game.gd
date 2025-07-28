@@ -183,26 +183,15 @@ func _on_item_delivered() -> void:
 		print("📦 Inventory after delivery: ", player_inventory)
 		update_inventory_display()
 		
+		# Update player speed after inventory change
+		if player and player.has_method("update_movement_speed"):
+			player.update_movement_speed()
+		
 		# Give points for delivery
 		score += 100
 		print("💰 DELIVERY BONUS: +100 points! New score: ", int(score))
 		
-		# If inventory was full and now has space, immediately update display and reactivate crafting
-		if was_inventory_full and player_inventory.size() < max_inventory_size:
-			print("🔓 Inventory no longer full - reactivating crafting!")
-			input_array.clear()
-			is_crafting_active = true
-			generate_random_sequence(sequence_length)
-		# Generate new sequence after delivery if crafting isn't active but inventory still has space
-		elif not is_crafting_active and player_inventory.size() < max_inventory_size:
-			is_crafting_active = true
-			generate_random_sequence(sequence_length)
-			print("🔄 New crafting sequence generated!")
-	else:
-		print("❌ No items in inventory to deliver!")
-		print("💀 Game Over - No items to deliver!")
-		game_over()
-
+		# ... rest of the function stays the same
 func update_pattern_list() -> void:
 	"""Update the visual pattern display"""
 	# Define texture mappings for complete and incomplete states

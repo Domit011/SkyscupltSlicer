@@ -2,10 +2,14 @@ extends CharacterBody2D
 
 # Movement variables
 @export var move_speed: float = 400.0 # Left-right speed in pixels/second
-@export var upward_speed: float = 100.0 # Upward speed in pixels/second
+@export var base_upward_speed: float = 100.0 # Base upward speed in pixels/second
+@export var speed_reduction_per_item: float = 0.05 # 5% speed reduction per item
 @export var tilt_angle: float = 15.0 # Tilt angle in degrees
 @export var tilt_speed: float = 5.0 # How fast the player tilts (higher = faster)
 @export var game_manager : Node2D
+
+# Current effective upward speed (calculated based on inventory)
+var current_upward_speed: float = 100.0
 
 # Signal for item delivery
 signal item_delivered
@@ -33,8 +37,76 @@ func _ready() -> void:
 			print("✅ Found node with game_over method: ", child.name)
 			game_manager = child
 			break
+	
+	# Initialize speed
+	update_movement_speed()
+
+func update_movement_speed() -> void:
+	"""Update the current upward speed based on inventory size"""
+	var inventory_size = 0
+	
+	# Try multiple ways to get inventory size
+	if game_manager == null:
+		# Try to find game manager if not set
+		find_game_manager()
+	
+	# Get inventory size from game manager
+	if game_manager != null:
+		if game_manager.has_method("get") and game_manager.get("player_inventory") != null:
+			inventory_size = game_manager.player_inventory.size()
+			print("📦 Found inventory via get(): ", inventory_size, " items")
+		elif "player_inventory" in game_manager:
+			inventory_size = game_manager.player_inventory.size()
+			print("📦 Found inventory via direct access: ", inventory_size, " items")
+		else:
+			print("❌ game_manager exists but no player_inventory found")
+			print("🔍 Available properties: ", game_manager.get_property_list())
+	else:
+		print("❌ game_manager is null in update_movement_speed")
+	
+	# Calculate speed reduction: 1.0 - (inventory_size * speed_reduction_per_item)
+	var speed_multiplier = 1.0 - (inventory_size * speed_reduction_per_item)
+	
+	# Ensure speed doesn't go below a reasonable minimum (20% of base speed)
+	speed_multiplier = max(speed_multiplier, 0.2)
+	
+	# Apply the multiplier to base speed
+	current_upward_speed = base_upward_speed * speed_multiplier
+	
+	print("🏃 Speed updated - Inventory: %d items, Speed: %.1f (%.0f%% of base)" % [
+		inventory_size, 
+		current_upward_speed, 
+		speed_multiplier * 100
+	])
+
+func find_game_manager() -> void:
+	"""Helper function to find the game manager"""
+	# Try parent
+	if get_parent() and get_parent().has_method("game_over"):
+		game_manager = get_parent()
+		print("✅ Found game_manager in parent for speed system")
+		return
+	
+	# Try scene root
+	if get_tree().current_scene and get_tree().current_scene.has_method("game_over"):
+		game_manager = get_tree().current_scene
+		print("✅ Found game_manager in scene root for speed system")
+		return
+	
+	# Search scene children
+	var root = get_tree().current_scene
+	for child in root.get_children():
+		if child.has_method("game_over"):
+			game_manager = child
+			print("✅ Found game_manager in scene children for speed system: ", child.name)
+			return
 
 func _physics_process(delta: float) -> void:
+	# Update speed based on current inventory (but only every few frames for performance)
+	# Check every 10 frames instead of every frame
+	if Engine.get_process_frames() % 10 == 0:
+		update_movement_speed()
+	
 	# Initialize velocity
 	var velocity = Vector2.ZERO
 	
@@ -42,8 +114,8 @@ func _physics_process(delta: float) -> void:
 	var direction = Input.get_axis("Left", "Right")
 	velocity.x = direction * move_speed
 	
-	# Apply constant upward movement
-	velocity.y = -upward_speed # Negative because Godot's Y-axis is down
+	# Apply current upward movement (adjusted for inventory)
+	velocity.y = -current_upward_speed # Negative because Godot's Y-axis is down
 	
 	# Handle tilting based on movement direction
 	var target_rotation = 0.0

@@ -1,6 +1,6 @@
-extends Control  # or whatever your title screen extends
+extends Control  
 
-@onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer  # Adjust path as needed
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D  # 
 
 func _ready() -> void:
 	# Make sure the audio stream is set to loop

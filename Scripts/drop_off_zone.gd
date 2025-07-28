@@ -2,9 +2,9 @@ extends Area2D
 class_name DropOffZone
 
 # Visual feedback
-@onready var sprite: Sprite2D = $Sprite2D
+
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var label: Label = $Label
+
 
 # Zone properties
 @export var zone_name: String = "Drop Zone"
@@ -38,15 +38,13 @@ func _ready() -> void:
 func setup_zone() -> void:
 	"""Setup the visual appearance of the drop-off zone"""
 	
-	# Setup sprite if it exists
-	if sprite:
-		sprite.modulate = normal_color
+
 	
 	# Setup label if it exists
-	if label:
-		label.text = zone_name
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	#if label:
+		#label.text = zone_name
+		#label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		#label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	
 	# Ensure collision shape exists
 	if not collision_shape:
@@ -85,17 +83,18 @@ func _on_body_exited(body: Node2D) -> void:
 
 func highlight_zone(highlight: bool) -> void:
 	"""Provide visual feedback when player is in zone"""
-	if sprite:
-		if highlight:
-			sprite.modulate = highlight_color
-			# Optional: Add scaling effect
-			var tween = create_tween()
-			tween.tween_property(sprite, "scale", Vector2(1.1, 1.1), 0.2)
-		else:
-			sprite.modulate = normal_color
-			# Reset scale
-			var tween = create_tween()
-			tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.2)
+	pass
+	#if sprite:
+		#if highlight:
+			#sprite.modulate = highlight_color
+			## Optional: Add scaling effect
+			#var tween = create_tween()
+			#tween.tween_property(sprite, "scale", Vector2(1.1, 1.1), 0.2)
+		#else:
+			#sprite.modulate = normal_color
+			## Reset scale
+			#var tween = create_tween()
+			#tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.2)
 
 func attempt_delivery() -> void:
 	"""Attempt to deliver items when player enters zone"""
@@ -123,14 +122,15 @@ func play_delivery_sound() -> void:
 
 func show_delivery_effect() -> void:
 	"""Show a visual effect when delivery occurs"""
-	# Create a simple flash effect
-	if sprite:
-		var original_modulate = sprite.modulate
-		var tween = create_tween()
-		tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
-		tween.tween_property(sprite, "modulate", original_modulate, 0.1)
-		tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
-		tween.tween_property(sprite, "modulate", original_modulate, 0.1)
+	pass
+	## Create a simple flash effect
+	#if sprite:
+		#var original_modulate = sprite.modulate
+		#var tween = create_tween()
+		#tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
+		#tween.tween_property(sprite, "modulate", original_modulate, 0.1)
+		#tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
+		#tween.tween_property(sprite, "modulate", original_modulate, 0.1)
 
 # Optional: Manual delivery trigger (if you want button-based delivery instead)
 func manual_delivery() -> void:

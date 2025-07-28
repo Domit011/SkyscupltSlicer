@@ -32,7 +32,7 @@ const LEADERBOARD_FILE: String = "user://leaderboard.json"
 # UI References
 @onready var leaderboard_label: Label = $LeaderboardLabel
 @onready var background: ColorRect = $Background
-@onready var exit_button: Button = $ExitButton
+@onready var exit_button: Button = $VBoxContainer/Button
 
 # Leaderboard data
 var leaderboard: Array = []

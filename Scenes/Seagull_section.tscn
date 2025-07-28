@@ -1,14 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://bpos7hdah7g2l"]
+[gd_scene load_steps=16 format=3 uid="uid://bpos7hdah7g2l"]
 
 [ext_resource type="Script" uid="uid://birgik37skaj4" path="res://Scripts/section.gd" id="1_28ggr"]
 [ext_resource type="Texture2D" uid="uid://djtcvxp50eene" path="res://Sprites/backgrounds/New Piskel-1.png.png" id="2_8wqkq"]
-[ext_resource type="Texture2D" uid="uid://ijrqj2knseqf" path="res://Sprites/icon.svg" id="3_uowb4"]
 [ext_resource type="PackedScene" uid="uid://buddhhlqnx11k" path="res://Scenes/Seagull.tscn" id="4_utugn"]
 [ext_resource type="Texture2D" uid="uid://cll3mag13fsh8" path="res://Sprites/npc/Male adventurer/Tilesheet/character_maleAdventurer_sheet.png" id="5_l8g4o"]
 [ext_resource type="Texture2D" uid="uid://c4xs77t8h2tlr" path="res://Sprites/stuff'n'things/Blue-cloud-clipart-PNG-removebg-preview.png" id="6_8wqkq"]
 [ext_resource type="PackedScene" uid="uid://bj3ewep81q6a1" path="res://Scenes/drop_off_zone.tscn" id="7_8wqkq"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l8g4o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8wqkq"]
 atlas = ExtResource("5_l8g4o")
@@ -82,40 +79,19 @@ position = Vector2(576, 324)
 scale = Vector2(9, 5.0625)
 texture = ExtResource("2_8wqkq")
 
-[node name="Obstacles" type="Node2D" parent="."]
-scale = Vector2(13.6173, 13.6173)
-
-[node name="Obstacle" type="StaticBody2D" parent="Obstacles" groups=["Obstacle"]]
-position = Vector2(54.7833, 7.12329)
-scale = Vector2(0.257129, 0.257129)
-
-[node name="Sprite2D" type="Sprite2D" parent="Obstacles/Obstacle"]
-position = Vector2(1.13249e-06, -7.7486e-07)
-scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("3_uowb4")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle"]
-shape = SubResource("RectangleShape2D_l8g4o")
-
-[node name="Obstacle2" type="StaticBody2D" parent="Obstacles" groups=["Obstacle"]]
-position = Vector2(15.9356, 31.0634)
-scale = Vector2(0.215703, 0.215703)
-
-[node name="Sprite2D" type="Sprite2D" parent="Obstacles/Obstacle2"]
-position = Vector2(1.13249e-06, -7.7486e-07)
-scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("3_uowb4")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Obstacle2"]
-shape = SubResource("RectangleShape2D_l8g4o")
-
 [node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-6911.99, 324.5)
 scale = Vector2(57.6, 32.25)
 rect = Rect2(120, -10, 20, 20)
 
-[node name="CharacterBody2D" parent="." groups=["Obstacle"] instance=ExtResource("4_utugn")]
-position = Vector2(1031, 240)
+[node name="Seagull" parent="." groups=["Obstacle"] instance=ExtResource("4_utugn")]
+position = Vector2(1090, 320)
+
+[node name="Seagull2" parent="." groups=["Obstacle"] instance=ExtResource("4_utugn")]
+position = Vector2(945, 268)
+
+[node name="Seagull3" parent="." groups=["Obstacle"] instance=ExtResource("4_utugn")]
+position = Vector2(736, 462)
 
 [node name="cloud and npc" type="Node2D" parent="."]
 

@@ -52,6 +52,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_aaqfp")
 
 [node name="MusicSlider" type="HSlider" parent="VBoxContainer/MusicContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
 [node name="SFXContainer" type="HBoxContainer" parent="VBoxContainer"]
@@ -62,6 +63,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_aaqfp")
 
 [node name="SFXSlider" type="HSlider" parent="VBoxContainer/SFXContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
 [connection signal="pressed" from="VBoxContainer2/Button" to="VBoxContainer2/Button" method="_on_pressed"]

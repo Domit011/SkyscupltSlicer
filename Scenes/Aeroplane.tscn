@@ -16,7 +16,6 @@ max_speed = 125.0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(47.2222, 29.1666)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_jbjhu")
 
 [node name="Area2D" type="Area2D" parent="."]
