@@ -79,11 +79,6 @@ position = Vector2(576, 324)
 scale = Vector2(9, 5.0625)
 texture = ExtResource("2_8wqkq")
 
-[node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(-6911.99, 324.5)
-scale = Vector2(57.6, 32.25)
-rect = Rect2(120, -10, 20, 20)
-
 [node name="Seagull" parent="." groups=["Obstacle"] instance=ExtResource("4_utugn")]
 position = Vector2(1090, 320)
 
@@ -116,3 +111,8 @@ texture = ExtResource("6_8wqkq")
 
 [node name="DropOffZone" parent="." instance=ExtResource("7_8wqkq")]
 position = Vector2(65, 131)
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-6911.99, 324.5)
+scale = Vector2(57.6, 32.25)
+rect = Rect2(120, -10, 20, 20)

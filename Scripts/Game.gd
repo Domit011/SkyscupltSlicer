@@ -1,6 +1,7 @@
 extends Node2D
 
 # Score variables
+var tile_vis = true
 var has_item = false
 var score: float = 0.0
 var is_game_over: bool = false
@@ -191,7 +192,20 @@ func _on_item_delivered() -> void:
 		score += 100
 		print("💰 DELIVERY BONUS: +100 points! New score: ", int(score))
 		
-		# ... rest of the function stays the same
+		# RE-ENABLE CRAFTING if it was disabled due to full inventory
+		if was_inventory_full and not is_crafting_active:
+			print("🔓 Re-enabling crafting after delivery!")
+			is_crafting_active = true
+			# Clear any existing input and generate new sequence
+			input_array.clear()
+			generate_random_sequence(sequence_length)
+		
+		# If crafting was already active but no sequence exists, generate one
+		elif is_crafting_active and current_craft_request.is_empty():
+			print("🎯 Generating new sequence after delivery!")
+			input_array.clear()
+			generate_random_sequence(sequence_length)
+			
 func update_pattern_list() -> void:
 	"""Update the visual pattern display"""
 	# Define texture mappings for complete and incomplete states
@@ -241,11 +255,15 @@ func reset_game() -> void:
 	score = 0.0
 	is_game_over = false
 	is_crafting_active = true
+	tile_vis = true  # Show tiles when game is active
 	player_inventory.clear()
 	input_array.clear()
 	current_craft_request.clear()  # Ensure craft request is cleared
 	update_score_display()
 	update_inventory_display()
+	
+	# Show tile graphics when game starts
+	set_tile_graphics_visibility(true)
 	
 	# Reset player position
 	if player:
@@ -280,6 +298,16 @@ func reset_game() -> void:
 	# Generate new sequence when game resets
 	generate_random_sequence()
 	print("✅ Game reset complete")
+	
+# Add this new function to control tile visibility
+func set_tile_graphics_visibility(visible: bool) -> void:
+	"""Control the visibility of all tile graphics"""
+	var input_nodes = [input_1, input_2, input_3, input_4]
+	for node in input_nodes:
+		if node:
+			node.visible = visible
+	print("🎨 Tile graphics visibility set to: ", visible)
+
 
 func game_over() -> void:
 	if is_game_over:
@@ -288,7 +316,11 @@ func game_over() -> void:
 	print("🎮 GAME OVER - Final Score: ", int(score))
 	get_tree().paused = true
 	is_game_over = true
+	tile_vis = false  # Changed to false since we're hiding tiles
 	is_crafting_active = false
+	
+	# Hide tile graphics when game is over
+	set_tile_graphics_visibility(false)
 	
 	# Save the score to leaderboard file
 	save_score_to_leaderboard(int(score))
@@ -394,6 +426,7 @@ func complete_crafting_sequence() -> void:
 		
 		# Only generate new sequence if inventory isn't full
 		if player_inventory.size() < max_inventory_size:
+			print("work")
 			# Wait a moment, then generate new sequence
 			await get_tree().create_timer(1.0).timeout
 			# Clear input array BEFORE generating new sequence

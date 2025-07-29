@@ -1,14 +1,15 @@
 extends CharacterBody2D
 
 # Movement variables
-@export var move_speed: float = 400.0 # Left-right speed in pixels/second
+@export var base_move_speed: float = 400.0 # Base left-right speed in pixels/second
 @export var base_upward_speed: float = 100.0 # Base upward speed in pixels/second
-@export var speed_reduction_per_item: float = 0.05 # 5% speed reduction per item
+@export var speed_reduction_per_item: float = 0.02 # 2% speed reduction per item
 @export var tilt_angle: float = 15.0 # Tilt angle in degrees
 @export var tilt_speed: float = 5.0 # How fast the player tilts (higher = faster)
 @export var game_manager : Node2D
 
-# Current effective upward speed (calculated based on inventory)
+# Current effective speeds (calculated based on inventory)
+var current_move_speed: float = 400.0
 var current_upward_speed: float = 100.0
 
 # Signal for item delivery
@@ -20,6 +21,40 @@ func _ready() -> void:
 	print("🔍 Player node path: ", get_path())
 	print("🔍 Player parent: ", get_parent())
 	print("🔍 Player parent name: ", get_parent().name if get_parent() else "No parent")
+	
+	# CRITICAL: Make sure the hit box area is properly configured
+	var hit_box = get_node_or_null("HitBox")  # Adjust path as needed
+	if hit_box and hit_box is Area2D:
+		print("✅ Found HitBox Area2D: ", hit_box.name)
+		
+		# Enable monitoring
+		hit_box.monitoring = true
+		hit_box.monitorable = true
+		
+		# Connect signals if not already connected
+		if not hit_box.area_entered.is_connected(_on_hit_box_area_entered):
+			hit_box.area_entered.connect(_on_hit_box_area_entered)
+			print("✅ Connected area_entered signal")
+		
+		if not hit_box.body_entered.is_connected(_on_hit_box_body_entered):
+			hit_box.body_entered.connect(_on_hit_box_body_entered)
+			print("✅ Connected body_entered signal")
+		
+		# Debug collision settings
+		print("🔍 HitBox collision_layer: ", hit_box.collision_layer)
+		print("🔍 HitBox collision_mask: ", hit_box.collision_mask)
+		print("🔍 HitBox monitoring: ", hit_box.monitoring)
+		print("🔍 HitBox monitorable: ", hit_box.monitorable)
+		
+		# Check for collision shapes
+		for child in hit_box.get_children():
+			if child is CollisionShape2D:
+				print("✅ Found collision shape: ", child.name, " - Shape: ", child.shape)
+	else:
+		print("❌ HitBox Area2D not found! Looking for Area2D children...")
+		for child in get_children():
+			if child is Area2D:
+				print("🔍 Found Area2D child: ", child.name)
 	
 	# Try different ways to find game manager
 	var parent = get_parent()
@@ -38,11 +73,11 @@ func _ready() -> void:
 			game_manager = child
 			break
 	
-	# Initialize speed
+	# Initialize speeds
 	update_movement_speed()
 
 func update_movement_speed() -> void:
-	"""Update the current upward speed based on inventory size"""
+	"""Update both horizontal and vertical speeds based on inventory size"""
 	var inventory_size = 0
 	
 	# Try multiple ways to get inventory size
@@ -54,10 +89,10 @@ func update_movement_speed() -> void:
 	if game_manager != null:
 		if game_manager.has_method("get") and game_manager.get("player_inventory") != null:
 			inventory_size = game_manager.player_inventory.size()
-			print("📦 Found inventory via get(): ", inventory_size, " items")
+			
 		elif "player_inventory" in game_manager:
 			inventory_size = game_manager.player_inventory.size()
-			print("📦 Found inventory via direct access: ", inventory_size, " items")
+			
 		else:
 			print("❌ game_manager exists but no player_inventory found")
 			print("🔍 Available properties: ", game_manager.get_property_list())
@@ -70,14 +105,13 @@ func update_movement_speed() -> void:
 	# Ensure speed doesn't go below a reasonable minimum (20% of base speed)
 	speed_multiplier = max(speed_multiplier, 0.2)
 	
-	# Apply the multiplier to base speed
+	# Apply the multiplier to both base speeds
 	current_upward_speed = base_upward_speed * speed_multiplier
+	current_move_speed = base_move_speed * speed_multiplier
 	
-	print("🏃 Speed updated - Inventory: %d items, Speed: %.1f (%.0f%% of base)" % [
-		inventory_size, 
-		current_upward_speed, 
-		speed_multiplier * 100
-	])
+	# Debug output to see the speed changes
+	if inventory_size > 0:
+		pass
 
 func find_game_manager() -> void:
 	"""Helper function to find the game manager"""
@@ -110,9 +144,9 @@ func _physics_process(delta: float) -> void:
 	# Initialize velocity
 	var velocity = Vector2.ZERO
 	
-	# Get left-right input
+	# Get left-right input and apply current move speed (now affected by inventory)
 	var direction = Input.get_axis("Left", "Right")
-	velocity.x = direction * move_speed
+	velocity.x = direction * current_move_speed  # Changed from move_speed to current_move_speed
 	
 	# Apply current upward movement (adjusted for inventory)
 	velocity.y = -current_upward_speed # Negative because Godot's Y-axis is down
@@ -170,49 +204,101 @@ func _on_hit_box_body_entered(body: Node2D) -> void:
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	print("🎯 Hit box area collision detected with: ", area.name)
 	print("🎯 Area groups: ", area.get_groups())
+	print("🎯 Area collision_layer: ", area.collision_layer)
+	print("🎯 Area collision_mask: ", area.collision_mask)
 	
-	if area.is_in_group("DropOff"):
-		print("📦 Collided with drop-off zone!")
-		
-		# Try multiple ways to find game manager
-		var gm = null
-		
-		# Method 1: Use the exported variable
-		if game_manager != null:
-			gm = game_manager
-			print("✅ Using exported game_manager")
-		
-		# Method 2: Try parent
-		elif get_parent() and get_parent().has_method("game_over"):
-			gm = get_parent()
-			print("✅ Using parent as game_manager")
-		
-		# Method 3: Try scene root
-		elif get_tree().current_scene and get_tree().current_scene.has_method("game_over"):
-			gm = get_tree().current_scene
-			print("✅ Using scene root as game_manager")
-		
-		# Method 4: Search all children of scene root
-		else:
-			var root = get_tree().current_scene
-			for child in root.get_children():
-				if child.has_method("game_over"):
-					gm = child
-					print("✅ Found game_manager in scene children: ", child.name)
-					break
-		
-		if gm:
-			print("📦 Game manager found! Inventory size: ", gm.player_inventory.size())
-			# Check if player has items to deliver
-			if gm.player_inventory.size() > 0:
-				print("🚀 Emitting item_delivered signal...")
-				item_delivered.emit()
+	# Check ALL groups, not just DropOff
+	for group in area.get_groups():
+		print("🔍 Checking group: ", group)
+		if group == "DropOff":
+			print("📦 CONFIRMED: Collided with drop-off zone!")
+			
+			# Force find game manager every time to be sure
+			var gm = null
+			
+			# Method 1: Try the cached reference
+			if game_manager != null and game_manager.has_method("game_over"):
+				gm = game_manager
+				print("✅ Using cached game_manager: ", gm.name)
+			
+			# Method 2: Search scene tree
+			if gm == null:
+				var root = get_tree().current_scene
+				print("🔍 Searching scene tree from root: ", root.name)
+				for child in root.get_children():
+					print("🔍 Checking child: ", child.name, " - Has game_over: ", child.has_method("game_over"))
+					if child.has_method("game_over"):
+						gm = child
+						game_manager = gm  # Cache it
+						print("✅ Found game_manager: ", child.name)
+						break
+			
+			# Method 3: Try getting by group (if your game manager is in a group)
+			if gm == null:
+				var game_managers = get_tree().get_nodes_in_group("GameManager")
+				if game_managers.size() > 0:
+					gm = game_managers[0]
+					game_manager = gm
+					print("✅ Found game_manager by group: ", gm.name)
+			
+			# Now handle the delivery logic
+			if gm != null:
+				print("📦 Game manager confirmed: ", gm.name)
+				
+				# Get inventory with multiple fallback methods
+				var inventory_size = 0
+				var inventory_found = false
+				
+				# Try direct property access
+				if "player_inventory" in gm:
+					inventory_size = gm.player_inventory.size()
+					inventory_found = true
+					print("✅ Found inventory via direct access, size: ", inventory_size)
+				# Try get method
+				elif gm.has_method("get") and gm.get("player_inventory") != null:
+					inventory_size = gm.get("player_inventory").size()
+					inventory_found = true
+					print("✅ Found inventory via get method, size: ", inventory_size)
+				# Try custom getter
+				elif gm.has_method("get_inventory_size"):
+					inventory_size = gm.get_inventory_size()
+					inventory_found = true
+					print("✅ Found inventory via custom getter, size: ", inventory_size)
+				
+				if not inventory_found:
+					print("❌ Could not find player_inventory!")
+					print("🔍 Available properties in game manager:")
+					for prop in gm.get_property_list():
+						if "inventory" in prop.name.to_lower():
+							print("  - ", prop.name)
+					return
+				
+				print("📦 FINAL CHECK - Inventory size: ", inventory_size)
+				
+				# THE CRITICAL MOMENT: Check if player has items to deliver
+				if inventory_size > 0:
+					print("🚀 SUCCESS: Player has ", inventory_size, " items! Emitting delivery signal...")
+					item_delivered.emit()
+				else:
+					print("❌❌❌ NO ITEMS TO DELIVER! ❌❌❌")
+					print("💀💀💀 GAME OVER - Empty inventory delivery attempt! 💀💀💀")
+					
+					# Multiple attempts to call game over
+					if gm.has_method("game_over"):
+						print("🔥🔥🔥 CALLING GAME_OVER() NOW! 🔥🔥🔥")
+						gm.call("game_over")  # Use call() method for extra reliability
+						print("✅ game_over() called successfully")
+					else:
+						print("❌ CRITICAL ERROR: game_over method not found!")
+						print("🔍 Available methods in game manager:")
+						for method in gm.get_method_list():
+							print("  - ", method.name)
+						# Force quit as emergency
+						print("🔥 EMERGENCY QUIT!")
+						get_tree().quit()
 			else:
-				print("❌ No items to deliver!")
-				print("💀 Game Over - No items to deliver!")
-				gm.game_over()
-		else:
-			print("❌ CRITICAL ERROR: Could not find game manager anywhere!")
-			print("❌ Available nodes in scene:")
-			for child in get_tree().current_scene.get_children():
-				print("  - ", child.name, " (methods: ", child.get_method_list().size(), ")")
+				print("❌❌❌ CRITICAL FAILURE: No game manager found anywhere!")
+				print("🔥 EMERGENCY QUIT!")
+				get_tree().quit()
+			
+			break  # Exit the group loop once we handle DropOff
