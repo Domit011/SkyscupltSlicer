@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://3ik7djlndy5t"]
+[gd_scene load_steps=22 format=3 uid="uid://3ik7djlndy5t"]
 
 [ext_resource type="Script" uid="uid://bejfkbc7y8m8k" path="res://Scripts/Game.gd" id="1_o85vq"]
 [ext_resource type="Texture2D" uid="uid://uxy78dvyfp65" path="res://Sprites/kenney_1-bit-input-prompts-pixel-16/Tiles (White)/tile_0438.png" id="2_hhruo"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cv7k6bj3kdg8s" path="res://Sprites/backgrounds/ChatGPT Image Jul 28, 2025, 12_56_03 PM.png" id="13_grb6v"]
 [ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="14_hhruo"]
 [ext_resource type="Script" uid="uid://u8o8qc543l8k" path="res://Scripts/restart_button.gd" id="17_c21gh"]
+[ext_resource type="Shader" uid="uid://dgh3mtxp1i8n" path="res://Shaders/pause_menu.gdshader" id="18_grb6v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wd5bn"]
 bg_color = Color(0.745098, 1, 1, 0)
@@ -25,6 +26,10 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c21gh"]
+shader = ExtResource("18_grb6v")
+shader_parameter/lod = 0.0
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_o85vq")
@@ -173,6 +178,9 @@ position = Vector2(578, 604)
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("7_ftk8y")]
 
+[node name="ColorRect" parent="CanvasLayer/PauseMenu" index="0"]
+material = SubResource("ShaderMaterial_c21gh")
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_b5lau")
 autoplay = true
@@ -183,3 +191,5 @@ parameters/looping = true
 
 [connection signal="pressed" from="UI/DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="item_delivered" from="Player" to="." method="_on_player_item_delivered"]
+
+[editable path="CanvasLayer/PauseMenu"]

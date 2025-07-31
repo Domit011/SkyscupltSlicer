@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://bdnkhgt65tjn5"]
+[gd_scene load_steps=14 format=3 uid="uid://bdnkhgt65tjn5"]
 
 [ext_resource type="Script" uid="uid://clplb6e6w54m1" path="res://Scripts/MainMenu.gd" id="1_c1gdy"]
 [ext_resource type="Texture2D" uid="uid://c273ju8axwwyv" path="res://Sprites/backgrounds/ChatGPT Image Jul 18, 2025, 12_55_04 PM.png" id="2_opny4"]
-[ext_resource type="FontFile" uid="uid://b1s7se5rvlegj" path="res://Fonts/kingthings-bloone-font/KingthingsBloone-3926.ttf" id="2_wou8e"]
 [ext_resource type="Script" uid="uid://buxqndjhqu17b" path="res://Scripts/play_button.gd" id="3_s30q0"]
 [ext_resource type="Script" uid="uid://bcfd72bx2w44t" path="res://Scripts/Leadboard_button.gd" id="4_wou8e"]
 [ext_resource type="Script" uid="uid://db2cnlofsye1c" path="res://Scripts/settings_Button.gd" id="5_75exb"]
@@ -117,21 +116,6 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_wd5bn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_wd5bn")
 text = "Settings"
 script = ExtResource("5_75exb")
-
-[node name="Label" type="Label" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -456.5
-offset_top = 61.0
-offset_right = 456.5
-offset_bottom = 152.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("2_wou8e")
-theme_override_font_sizes/font_size = 69
-text = "Skysculpt slicer"
 
 [node name="Tutorial" type="Label" parent="."]
 layout_mode = 1

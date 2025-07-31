@@ -1,6 +1,6 @@
 extends Control
 
-
+@onready var main = get_tree().current_scene
 
 func _ready():
 	$AnimationPlayer.play("RESET")
