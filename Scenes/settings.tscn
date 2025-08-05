@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgmltgq7iwqfe"]
+[gd_scene load_steps=8 format=3 uid="uid://dgmltgq7iwqfe"]
 
 [ext_resource type="Script" uid="uid://c3njj7b1e0be" path="res://Scripts/settingsMenu.gd" id="1_lhmql"]
+[ext_resource type="Texture2D" uid="uid://cv7k6bj3kdg8s" path="res://Sprites/backgrounds/ChatGPT Image Jul 28, 2025, 12_56_03 PM.png" id="2_6kysc"]
 [ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="2_aaqfp"]
 [ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_lhmql"]
 [ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="4_aaqfp"]
+[ext_resource type="Shader" uid="uid://dgh3mtxp1i8n" path="res://Shaders/pause_menu.gdshader" id="5_j2dne"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6kysc"]
+shader = ExtResource("5_j2dne")
+shader_parameter/lod = 0.0
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -15,21 +21,52 @@ grow_vertical = 2
 scale = Vector2(0.998495, 1.00802)
 script = ExtResource("1_lhmql")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(0.185908, 0.185908)
+offset_right = 1536.0
+offset_bottom = 1024.0
+scale = Vector2(0.841273, 0.841273)
+texture = ExtResource("2_6kysc")
 
-[node name="Button" type="Button" parent="VBoxContainer2"]
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_6kysc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -129.0
+offset_top = 88.0
+offset_right = 129.0
+offset_bottom = 171.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_aaqfp")
+theme_override_font_sizes/font_size = 65
+text = "Settings"
+
+[node name="MSC&SFX" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 446.672
+offset_top = 227.178
+offset_right = 487.672
+offset_bottom = 277.178
+
+[node name="MSC" type="Label" parent="MSC&SFX"]
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.18359, 0.18359, 0.18359, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0.18359, 0.18359, 0.18359, 1)
-theme_override_colors/font_pressed_color = Color(0.18359, 0.18359, 0.18359, 1)
-icon = ExtResource("2_aaqfp")
-flat = true
-script = ExtResource("2_lhmql")
+theme_override_fonts/font = ExtResource("4_aaqfp")
+text = "MSC:"
+
+[node name="SFX" type="Label" parent="MSC&SFX"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_aaqfp")
+text = "SFX:"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -38,10 +75,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -25.0
-offset_right = 138.0
-offset_bottom = 25.0
+offset_left = -57.2193
+offset_top = -96.822
+offset_right = 147.781
+offset_bottom = -46.822
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -67,4 +104,20 @@ theme_override_fonts/font = ExtResource("4_aaqfp")
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[connection signal="pressed" from="VBoxContainer2/Button" to="VBoxContainer2/Button" method="_on_pressed"]
+[node name="Button" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 520.0
+offset_bottom = 520.0
+scale = Vector2(0.185908, 0.185908)
+
+[node name="Button" type="Button" parent="Button"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.18359, 0.18359, 0.18359, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.18359, 0.18359, 0.18359, 1)
+theme_override_colors/font_pressed_color = Color(0.18359, 0.18359, 0.18359, 1)
+icon = ExtResource("2_aaqfp")
+flat = true
+script = ExtResource("2_lhmql")
+
+[connection signal="pressed" from="Button/Button" to="Button/Button" method="_on_pressed"]

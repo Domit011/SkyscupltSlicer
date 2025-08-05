@@ -11,6 +11,7 @@ func _ready() -> void:
 	
 	# Setup volume sliders
 	setup_volume_sliders()
+	
 
 func _exit_tree() -> void:
 	# Don't stop the music when switching between menus
@@ -51,7 +52,7 @@ func update_volume_labels():
 	update_sfx_label()
 
 func update_music_label():
-	music_label.text = "Music: " + str(int(music_slider.value)) + "%"
+	music_label.text = str(int(music_slider.value)) + "%"
 
 func update_sfx_label():
-	sfx_label.text = "SFX: " + str(int(sfx_slider.value)) + "%"
+	sfx_label.text =  str(int(sfx_slider.value)) + "%"
