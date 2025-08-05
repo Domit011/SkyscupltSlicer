@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgmltgq7iwqfe"]
+[gd_scene load_steps=9 format=3 uid="uid://dgmltgq7iwqfe"]
 
 [ext_resource type="Script" uid="uid://c3njj7b1e0be" path="res://Scripts/settingsMenu.gd" id="1_lhmql"]
 [ext_resource type="Texture2D" uid="uid://cv7k6bj3kdg8s" path="res://Sprites/backgrounds/ChatGPT Image Jul 28, 2025, 12_56_03 PM.png" id="2_6kysc"]
@@ -10,6 +10,18 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6kysc"]
 shader = ExtResource("5_j2dne")
 shader_parameter/lod = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6kysc"]
+bg_color = Color(0, 0, 0, 0.137255)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -119,5 +131,24 @@ theme_override_colors/font_pressed_color = Color(0.18359, 0.18359, 0.18359, 1)
 icon = ExtResource("2_aaqfp")
 flat = true
 script = ExtResource("2_lhmql")
+
+[node name="InputSettingsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 523.788
+offset_top = 324.398
+offset_right = 656.788
+offset_bottom = 353.398
+theme_override_fonts/font = ExtResource("4_aaqfp")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6kysc")
+text = "Input Settings"
 
 [connection signal="pressed" from="Button/Button" to="Button/Button" method="_on_pressed"]

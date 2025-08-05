@@ -1,9 +1,13 @@
+# Updated Settings.gd
 extends Control
 
 @onready var music_slider: HSlider = $VBoxContainer/MusicContainer/MusicSlider
 @onready var sfx_slider: HSlider = $VBoxContainer/SFXContainer/SFXSlider
 @onready var music_label: Label = $VBoxContainer/MusicContainer/MusicLabel
 @onready var sfx_label: Label = $VBoxContainer/SFXContainer/SFXLabel
+
+# Add button for input settings
+@onready var input_settings_button: Button = $VBoxContainer/InputSettingsButton
 
 func _ready() -> void:
 	# Start menu music when entering any menu scene
@@ -12,7 +16,10 @@ func _ready() -> void:
 	# Setup volume sliders
 	setup_volume_sliders()
 	
-
+	# Connect input settings button
+	if input_settings_button:
+		input_settings_button.pressed.connect(_on_input_settings_pressed)
+	
 func _exit_tree() -> void:
 	# Don't stop the music when switching between menus
 	# Only stop when going to game scene
@@ -55,4 +62,8 @@ func update_music_label():
 	music_label.text = str(int(music_slider.value)) + "%"
 
 func update_sfx_label():
-	sfx_label.text =  str(int(sfx_slider.value)) + "%"
+	sfx_label.text = str(int(sfx_slider.value)) + "%"
+
+func _on_input_settings_pressed():
+	"""Open the input remapping menu"""
+	get_tree().change_scene_to_file("res://scenes/InputSettingsMenu.tscn")
