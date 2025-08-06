@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://88o3w2xx0tka" path="res://Scripts/LeaderboardMenu.gd" id="1_xc5bo"]
 [ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_1pumy"]
-[ext_resource type="Texture2D" uid="uid://c43b0fibbm86h" path="res://Sprites/backgrounds/sunsetbackground.png" id="2_5p4t1"]
+[ext_resource type="Texture2D" uid="uid://cv7k6bj3kdg8s" path="res://Sprites/backgrounds/ChatGPT Image Jul 28, 2025, 12_56_03 PM.png" id="2_oje66"]
 [ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="2_xc5bo"]
 [ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="5_oje66"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oje66"]
-texture = ExtResource("2_5p4t1")
+texture = ExtResource("2_oje66")
 modulate_color = Color(0.779291, 0.779291, 0.779291, 1)
 
 [node name="Control" type="Control"]

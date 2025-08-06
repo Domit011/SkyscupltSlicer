@@ -152,3 +152,4 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_6kysc")
 text = "Input Settings"
 
 [connection signal="pressed" from="Button/Button" to="Button/Button" method="_on_pressed"]
+[connection signal="pressed" from="InputSettingsButton" to="." method="_on_input_settings_button_pressed"]

@@ -12,12 +12,35 @@ var is_menu_music_playing: bool = false
 var music_volume: float = 1.0
 var sfx_volume: float = 1.0
 
+# Audio bus indices
+var music_bus_index: int
+var sfx_bus_index: int
+
 func _ready() -> void:
 	print("🔊 AudioManager _ready() called")
+	
+	# Get audio bus indices
+	music_bus_index = AudioServer.get_bus_index("Music")
+	sfx_bus_index = AudioServer.get_bus_index("SFX")
+	
+	# If buses don't exist, use Master bus
+	if music_bus_index == -1:
+		music_bus_index = AudioServer.get_bus_index("Master")
+		print("⚠️ Music bus not found, using Master bus")
+	
+	if sfx_bus_index == -1:
+		sfx_bus_index = AudioServer.get_bus_index("Master")
+		print("⚠️ SFX bus not found, using Master bus")
 	
 	# Create the audio players
 	menu_music_player = AudioStreamPlayer.new()
 	sfx_player = AudioStreamPlayer.new()
+	
+	# Set their buses (will use Master if custom buses don't exist)
+	if music_bus_index != AudioServer.get_bus_index("Master"):
+		menu_music_player.bus = "Music"
+	if sfx_bus_index != AudioServer.get_bus_index("Master"):
+		sfx_player.bus = "SFX"
 	
 	# Add to scene tree
 	add_child(menu_music_player)
@@ -51,29 +74,65 @@ func play_sfx(sound: AudioStream):
 		sfx_player.stream = sound
 		sfx_player.play()
 
-# SIMPLIFIED Volume control - directly on players
+# Function to find and control all audio players in the current scene
+func apply_volume_to_all_players():
+	var scene = get_tree().current_scene
+	if scene:
+		apply_volume_to_node_recursive(scene)
+
+func apply_volume_to_node_recursive(node: Node):
+	# Check if this node is an audio player
+	if node is AudioStreamPlayer or node is AudioStreamPlayer2D or node is AudioStreamPlayer3D:
+		# Apply music volume to all audio players for now
+		# You could add logic here to distinguish between music and SFX
+		var db = linear_to_db(music_volume)
+		db = clamp(db, -80.0, 0.0)
+		node.volume_db = db
+		print("🎵 Applied volume to audio player: ", node.name)
+	
+	# Recursively check children
+	for child in node.get_children():
+		apply_volume_to_node_recursive(child)
+
+# Volume control using both buses AND direct player control
 func set_music_volume_percent(percent: float):
 	print("🎵 Setting music volume to: ", percent, "%")
 	music_volume = percent / 100.0
 	
-	# Apply directly to the music player
 	var db = linear_to_db(music_volume)
 	db = clamp(db, -80.0, 0.0)
+	
+	# Method 1: Apply to audio bus (if it exists)
+	if music_bus_index != -1:
+		AudioServer.set_bus_volume_db(music_bus_index, db)
+		print("🎵 Music bus volume_db set to: ", db)
+	
+	# Method 2: Apply directly to our menu music player
 	menu_music_player.volume_db = db
 	
-	print("🎵 Music player volume_db set to: ", menu_music_player.volume_db)
+	# Method 3: Apply to all audio players in current scene
+	apply_volume_to_all_players()
+	
 	save_volume_settings()
 
 func set_sfx_volume_percent(percent: float):
 	print("🔊 Setting SFX volume to: ", percent, "%")
 	sfx_volume = percent / 100.0
 	
-	# Apply directly to the SFX player
 	var db = linear_to_db(sfx_volume)
 	db = clamp(db, -80.0, 0.0)
+	
+	# Method 1: Apply to audio bus (if it exists)
+	if sfx_bus_index != -1:
+		AudioServer.set_bus_volume_db(sfx_bus_index, db)
+		print("🔊 SFX bus volume_db set to: ", db)
+	
+	# Method 2: Apply directly to our SFX player
 	sfx_player.volume_db = db
 	
-	print("🔊 SFX player volume_db set to: ", sfx_player.volume_db)
+	# Note: For SFX, you might want separate logic to only affect SFX players
+	# For now, this applies music volume to all players
+	
 	save_volume_settings()
 
 func get_music_volume_percent() -> float:
@@ -105,3 +164,8 @@ func load_volume_settings():
 	# Apply the loaded volumes immediately
 	set_music_volume_percent(get_music_volume_percent())
 	set_sfx_volume_percent(get_sfx_volume_percent())
+
+# Call this function when entering a new scene to apply volume settings
+func apply_settings_to_scene():
+	print("🔄 Applying audio settings to current scene")
+	apply_volume_to_all_players()

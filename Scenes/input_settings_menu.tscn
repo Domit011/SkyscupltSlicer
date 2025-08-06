@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cogcsogugtinh"]
+[gd_scene load_steps=3 format=3 uid="uid://cogcsogugtinh"]
 
 [ext_resource type="Script" uid="uid://dvvdokagbevms" path="res://Scripts/InputManager.gd" id="1_xpj70"]
+[ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_f6pln"]
 
 [node name="InputSettingsMenu" type="Control"]
 layout_mode = 3
@@ -17,11 +18,17 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ResetButton" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -3.0
+offset_right = 5.0
 offset_bottom = 8.0
+grow_horizontal = 2
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+script = ExtResource("2_f6pln")

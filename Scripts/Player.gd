@@ -144,9 +144,17 @@ func _physics_process(delta: float) -> void:
 	# Initialize velocity
 	var velocity = Vector2.ZERO
 	
-	# Get left-right input and apply current move speed (now affected by inventory)
-	var direction = Input.get_axis("Left", "Right")
-	velocity.x = direction * current_move_speed  # Changed from move_speed to current_move_speed
+	# Get left-right input using InputManager's custom key mappings
+	var left_key = InputManager.get_input_key("Left")
+	var right_key = InputManager.get_input_key("Right")
+	
+	var direction = 0.0
+	if Input.is_physical_key_pressed(left_key):
+		direction -= 1.0
+	if Input.is_physical_key_pressed(right_key):
+		direction += 1.0
+	
+	velocity.x = direction * current_move_speed
 	
 	# Apply current upward movement (adjusted for inventory)
 	velocity.y = -current_upward_speed # Negative because Godot's Y-axis is down

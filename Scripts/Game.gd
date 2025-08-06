@@ -48,6 +48,9 @@ var max_inventory_size: int = 3
 # Crafting state
 var is_crafting_active: bool = true
 
+# Add these new texture dictionaries for dynamic icons
+var key_icon_textures = {}
+
 func _ready() -> void:
 	if audio_player and audio_player.stream:
 		audio_player.stream.loop = true
@@ -60,6 +63,13 @@ func _ready() -> void:
 		AudioManager.stop_menu_music()
 	else:
 		print("❌ ERROR: AudioManager not found!")
+
+	# Connect to InputManager for input changes
+	if InputManager:
+		InputManager.inputs_changed.connect(_on_inputs_changed)
+	
+	# Load key icon textures
+	load_key_icon_textures()
 
 	# Unpause game
 	get_tree().paused = false
@@ -106,6 +116,30 @@ func _ready() -> void:
 	# Generate first random sequence
 	generate_random_sequence()
 	call_deferred("update_pattern_list")
+
+func load_key_icon_textures():
+	"""Load all possible key icon textures"""
+	# Add paths to your key icon textures - populate the class member variable
+	key_icon_textures = {
+		KEY_A: load("res://icons/key_a.png"),
+		KEY_D: load("res://icons/key_d.png"),
+		KEY_W: load("res://icons/key_w.png"),
+		KEY_S: load("res://icons/key_s.png"),
+		KEY_UP: load("res://icons/arrow_up.png"),
+		KEY_DOWN: load("res://icons/arrow_down.png"),
+		KEY_LEFT: load("res://icons/arrow_left.png"),
+		KEY_RIGHT: load("res://icons/arrow_right.png"),
+		KEY_SPACE: load("res://icons/key_space.png"),
+		# Add more as needed
+	}
+
+func get_texture_for_key(key_code: int) -> Texture2D:
+	"""Get the texture for a specific key code"""
+	if key_code in key_icon_textures:
+		return key_icon_textures[key_code]
+	else:
+		# Return a default/unknown key texture
+		return load("res://icons/key_unknown.png")
 
 func setup_ui_positions() -> void:
 	"""Setup UI element positions"""
@@ -205,7 +239,7 @@ func _on_item_delivered() -> void:
 			print("🎯 Generating new sequence after delivery!")
 			input_array.clear()
 			generate_random_sequence(sequence_length)
-			
+
 func update_pattern_list() -> void:
 	"""Update the visual pattern display"""
 	# Define texture mappings for complete and incomplete states
@@ -245,6 +279,68 @@ func update_pattern_list() -> void:
 			var direction = current_craft_request[i]
 			if direction in texture_mappings["complete"]:
 				input_nodes[i].texture = texture_mappings["complete"][direction]
+
+func update_pattern_input_list() -> void:
+	"""Update the visual pattern display with current key mappings"""
+	# Get current key mappings for crafting inputs
+	var up_key = InputManager.get_input_key("ui_up")
+	var down_key = InputManager.get_input_key("ui_down")
+	var left_key = InputManager.get_input_key("ui_left")
+	var right_key = InputManager.get_input_key("ui_right")
+	
+	# Create texture mappings based on current key bindings
+	var texture_mappings = {
+		"complete": {
+			"up": get_texture_for_key(up_key),
+			"down": get_texture_for_key(down_key),
+			"left": get_texture_for_key(left_key),
+			"right": get_texture_for_key(right_key)
+		},  
+		"incomplete": {
+			"up": get_texture_for_key(up_key),
+			"down": get_texture_for_key(down_key),
+			"left": get_texture_for_key(left_key),
+			"right": get_texture_for_key(right_key)
+		}
+	}
+	
+	# Make incomplete versions slightly transparent or grayed out
+	for direction in texture_mappings["incomplete"]:
+		# You could create grayed-out versions or use modulate
+		# For now, we'll use the same textures but apply modulation later
+		pass
+	
+	# Store input references in an array for easier iteration
+	var input_nodes = [input_1, input_2, input_3, input_4]
+	
+	# Check if we have all required nodes
+	for node in input_nodes:
+		if not node:
+			print("⚠️ Warning: Missing input node in pattern display")
+			return
+	
+	# Initially set all inputs to incomplete textures based on current sequence
+	for i in range(min(input_nodes.size(), current_craft_request.size())):
+		var direction = current_craft_request[i]
+		if direction in texture_mappings["incomplete"]:
+			input_nodes[i].texture = texture_mappings["incomplete"][direction]
+			# Make incomplete inputs slightly transparent
+			input_nodes[i].modulate = Color(1, 1, 1, 0.5)
+	
+	# Update completed inputs based on input_array
+	for i in range(min(input_array.size(), input_nodes.size())):
+		if i < current_craft_request.size():
+			var direction = current_craft_request[i]
+			if direction in texture_mappings["complete"]:
+				input_nodes[i].texture = texture_mappings["complete"][direction]
+				# Make completed inputs fully opaque and slightly colored
+				input_nodes[i].modulate = Color(0.8, 1, 0.8, 1) # Slight green tint
+
+func _on_inputs_changed():
+	"""Called when InputManager detects input changes"""
+	print("🔄 Input mappings changed, updating UI...")
+	# Update the pattern display with new key icons
+	update_pattern_input_list()
 
 func reset_game() -> void:
 	print("🔄 Resetting game state...")
@@ -307,7 +403,6 @@ func set_tile_graphics_visibility(visible: bool) -> void:
 		if node:
 			node.visible = visible
 	print("🎨 Tile graphics visibility set to: ", visible)
-
 
 func game_over() -> void:
 	if is_game_over:
@@ -401,6 +496,49 @@ func _input(event: InputEvent) -> void:
 				print("❌ Wrong input! Expected: ", current_craft_request[input_pos], ", Got: ", input_received)
 				input_array.clear()
 				update_pattern_list()
+				return
+		
+		# Check if sequence is complete
+		if input_array.size() == current_craft_request.size():
+			print("🎉 SEQUENCE COMPLETED! Crafting item...")
+			complete_crafting_sequence()
+
+# Update your input handling to use InputManager
+func _input_remapped(event: InputEvent) -> void:
+	# Only process input if crafting is active and game isn't over
+	if not is_crafting_active or is_game_over:
+		return
+		
+	var input_pos = input_array.size()
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		var input_received = ""
+		
+		# Use InputManager to check for custom key mappings
+		var up_key = InputManager.get_input_key("ui_up")
+		var down_key = InputManager.get_input_key("ui_down")
+		var left_key = InputManager.get_input_key("ui_left")
+		var right_key = InputManager.get_input_key("ui_right")
+		
+		# Check against current key mappings
+		if event.physical_keycode == up_key:
+			input_received = "up"
+		elif event.physical_keycode == down_key:
+			input_received = "down"
+		elif event.physical_keycode == left_key:
+			input_received = "left"
+		elif event.physical_keycode == right_key:
+			input_received = "right"
+		
+		# Rest of your input handling logic remains the same
+		if input_received != "" and input_pos < current_craft_request.size():
+			if current_craft_request[input_pos] == input_received:
+				input_array.append(input_received)
+				print("✅ Correct input: ", input_received, " (", input_array.size(), "/", current_craft_request.size(), ")")
+				update_pattern_input_list()
+			else:
+				print("❌ Wrong input! Expected: ", current_craft_request[input_pos], ", Got: ", input_received)
+				input_array.clear()
+				update_pattern_input_list()
 				return
 		
 		# Check if sequence is complete
