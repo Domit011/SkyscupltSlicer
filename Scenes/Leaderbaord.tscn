@@ -1,14 +1,36 @@
-[gd_scene load_steps=7 format=3 uid="uid://4svaenkjr60g"]
+[gd_scene load_steps=18 format=3 uid="uid://4svaenkjr60g"]
 
 [ext_resource type="Script" uid="uid://88o3w2xx0tka" path="res://Scripts/LeaderboardMenu.gd" id="1_xc5bo"]
 [ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="2_1pumy"]
 [ext_resource type="Texture2D" uid="uid://cv7k6bj3kdg8s" path="res://Sprites/backgrounds/ChatGPT Image Jul 28, 2025, 12_56_03 PM.png" id="2_oje66"]
-[ext_resource type="Texture2D" uid="uid://dng1bfe046q1c" path="res://Sprites/UI/exit-12.png" id="2_xc5bo"]
+[ext_resource type="Texture2D" uid="uid://djb6ginmrtluu" path="res://Sprites/Icons/Tiles (Black)/tile_0133.png" id="3_oje66"]
 [ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="5_oje66"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oje66"]
 texture = ExtResource("2_oje66")
 modulate_color = Color(0.779291, 0.779291, 0.779291, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oje66"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_65xfq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ncco3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8sat0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f2sqg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rnnq8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_24fyp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eq4vs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_anjdg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5hq6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kwckj"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -30,17 +52,28 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_oje66")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-offset_right = 520.0
-offset_bottom = 520.0
-scale = Vector2(0.185908, 0.185908)
+offset_right = 29.0
+offset_bottom = 24.0
+scale = Vector2(4.54591, 4.54591)
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.18359, 0.18359, 0.18359, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0.18359, 0.18359, 0.18359, 1)
-theme_override_colors/font_pressed_color = Color(0.18359, 0.18359, 0.18359, 1)
-icon = ExtResource("2_xc5bo")
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oje66")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_65xfq")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ncco3")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8sat0")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_f2sqg")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_rnnq8")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_24fyp")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_eq4vs")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_anjdg")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_o5hq6")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kwckj")
+icon = ExtResource("3_oje66")
 flat = true
 script = ExtResource("2_1pumy")
 

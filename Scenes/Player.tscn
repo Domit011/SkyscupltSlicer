@@ -31,6 +31,7 @@ radius = 35.6305
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.477415, 0.477415)
 script = ExtResource("1_rpqav")
+base_move_speed = 200.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1e7my")
