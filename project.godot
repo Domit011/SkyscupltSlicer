@@ -18,7 +18,6 @@ config/icon="res://Sprites/icon.svg"
 [autoload]
 
 AudioManager="*res://Scripts/AudioManager.gd"
-InputManager="*res://Scripts/InputManager.gd"
 
 [global_group]
 

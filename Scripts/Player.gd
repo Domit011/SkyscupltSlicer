@@ -144,14 +144,11 @@ func _physics_process(delta: float) -> void:
 	# Initialize velocity
 	var velocity = Vector2.ZERO
 	
-	# Get left-right input using InputManager's custom key mappings
-	var left_key = InputManager.get_input_key("Left")
-	var right_key = InputManager.get_input_key("Right")
-	
+	# Get left-right input using basic A/D keys
 	var direction = 0.0
-	if Input.is_physical_key_pressed(left_key):
+	if Input.is_physical_key_pressed(KEY_A) or Input.is_action_pressed("ui_left"):
 		direction -= 1.0
-	if Input.is_physical_key_pressed(right_key):
+	if Input.is_physical_key_pressed(KEY_D) or Input.is_action_pressed("ui_right"):
 		direction += 1.0
 	
 	velocity.x = direction * current_move_speed

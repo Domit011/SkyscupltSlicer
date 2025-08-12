@@ -7,7 +7,6 @@ func _ready():
 	hide()
 
 func resume():
-	
 	$AnimationPlayer.play_backwards("blur")
 	await $AnimationPlayer.animation_finished
 	get_tree().paused = false
@@ -26,16 +25,12 @@ func testEsc():
 		
 func _on_play_pressed() -> void:
 	resume()
-	#get_tree().reload_current_scene()
 
 func _on_restart_pressed() -> void:
 	get_tree().reload_current_scene()
 
-
-
 func _process(delta):
 	testEsc()
-
 
 func _on_exit_pressed():
 	get_tree().paused = false

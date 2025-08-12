@@ -105,7 +105,8 @@ scale = Vector2(0.301386, 0.301386)
 texture = ExtResource("5_rie68")
 
 [node name="DropOffZone" parent="cloud and npc" instance=ExtResource("6_orm2k")]
-position = Vector2(843, 468)
+position = Vector2(927, 478)
+scale = Vector2(0.96, 0.52)
 
 [node name="Aeroplane" parent="." groups=["Obstacle"] instance=ExtResource("8_rie68")]
 position = Vector2(79, 308)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://3ik7djlndy5t"]
+[gd_scene load_steps=22 format=3 uid="uid://3ik7djlndy5t"]
 
 [ext_resource type="Script" uid="uid://bejfkbc7y8m8k" path="res://Scripts/Game.gd" id="1_o85vq"]
 [ext_resource type="Texture2D" uid="uid://uxy78dvyfp65" path="res://Sprites/Icons/Tiles (White)/tile_0438.png" id="2_hhruo"]
@@ -15,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://chtyd0prhvn1w" path="res://Sprites/Icons/Tiles (Black)/tile_0440.png" id="7_ivh21"]
 [ext_resource type="Texture2D" uid="uid://dgt5f1xywewad" path="res://Sprites/Icons/Tiles (Black)/tile_0441.png" id="8_7j4o8"]
 [ext_resource type="Texture2D" uid="uid://duhi08l6wn6u2" path="res://Sprites/Icons/Tiles (Black)/tile_0439.png" id="9_v0h0j"]
-[ext_resource type="PackedScene" uid="uid://dc6n6ydvxackt" path="res://Scenes/section_3.tscn" id="13_c21gh"]
 [ext_resource type="Texture2D" uid="uid://cv7k6bj3kdg8s" path="res://Sprites/backgrounds/ChatGPT Image Jul 28, 2025, 12_56_03 PM.png" id="13_grb6v"]
 [ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="14_hhruo"]
 [ext_resource type="FontFile" uid="uid://c0isqtyjdagv4" path="res://Fonts/realbun/Realbun.ttf" id="16_c21gh"]
@@ -51,8 +50,6 @@ player = NodePath("../Player")
 [node name="Section1" parent="SectionManager" instance=ExtResource("4_7ph4x")]
 
 [node name="Section2" parent="SectionManager" instance=ExtResource("4_pk35k")]
-
-[node name="Section 3" parent="SectionManager" instance=ExtResource("13_c21gh")]
 
 [node name="UI" type="CanvasLayer" parent="."]
 

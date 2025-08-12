@@ -4,9 +4,6 @@ extends Control
 @onready var sfx_slider: HSlider = $VBoxContainer/SFXContainer/SFXSlider
 @onready var music_label: Label = $VBoxContainer/MusicContainer/MusicLabel
 @onready var sfx_label: Label = $VBoxContainer/SFXContainer/SFXLabel
-
-# Add button for input settings
-@onready var input_settings_button: Button = $VBoxContainer/InputSettingsButton
 @onready var back_button: Button = $VBoxContainer/BackButton
 
 func _ready() -> void:
@@ -17,8 +14,6 @@ func _ready() -> void:
 	# Setup volume sliders
 	setup_volume_sliders()
 	
-
-	
 	# Connect back button (disconnect first if already connected)
 	if back_button:
 		# Disconnect any existing connections to avoid duplicates
@@ -28,7 +23,7 @@ func _ready() -> void:
 		print("✅ Back button connected")
 	else:
 		print("❌ ERROR: back_button not found!")
-	
+
 func _exit_tree() -> void:
 	# Don't stop the music when switching between menus
 	# Only stop when going to game scene
@@ -96,17 +91,11 @@ func update_sfx_label():
 	if sfx_label and sfx_slider:
 		sfx_label.text = str(int(sfx_slider.value)) + "%"
 
-func _on_input_settings_button_pressed():
-	"""Open the input remapping menu"""
-	print("🎮 Opening input settings...")
-	get_tree().change_scene_to_file("res://Scenes/input_settings_menu.tscn")
-
 func _on_back_button_pressed():
 	"""Go back to main menu"""
 	print("⬅️ Going back to main menu...")
 	# Change this path to match your main menu scene
 	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
-
 
 func _on_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Title_screen.tscn")
