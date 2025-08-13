@@ -146,9 +146,9 @@ func _physics_process(delta: float) -> void:
 	
 	# Get left-right input using basic A/D keys
 	var direction = 0.0
-	if Input.is_physical_key_pressed(KEY_A) or Input.is_action_pressed("ui_left"):
+	if Input.is_physical_key_pressed(KEY_A):
 		direction -= 1.0
-	if Input.is_physical_key_pressed(KEY_D) or Input.is_action_pressed("ui_right"):
+	if Input.is_physical_key_pressed(KEY_D):
 		direction += 1.0
 	
 	velocity.x = direction * current_move_speed

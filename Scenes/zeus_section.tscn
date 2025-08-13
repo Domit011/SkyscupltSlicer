@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnf34key3vctv"]
+
+[ext_resource type="Script" uid="uid://birgik37skaj4" path="res://Scripts/section.gd" id="1_6xt57"]
+[ext_resource type="Texture2D" uid="uid://djtcvxp50eene" path="res://Sprites/backgrounds/New Piskel-1.png.png" id="2_1g2jf"]
+[ext_resource type="PackedScene" uid="uid://dqv7mbhrs2t81" path="res://Scenes/Zues.tscn" id="3_1g2jf"]
+
+[node name="Zeus_Section" type="Node2D"]
+script = ExtResource("1_6xt57")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(576.5, 323.5)
+scale = Vector2(8.99219, 5.05469)
+texture = ExtResource("2_1g2jf")
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("3_1g2jf")]
+position = Vector2(874, 148)

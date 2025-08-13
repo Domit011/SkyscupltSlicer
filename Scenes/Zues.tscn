@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqv7mbhrs2t81"]
+
+[ext_resource type="Script" uid="uid://n1ylk6ydckw4" path="res://Shooting_enemy.gd" id="1_6kx4e"]
+[ext_resource type="Texture2D" uid="uid://bsfaeyyq0yafn" path="res://Sprites/npc/Zombie/Tilesheet/character_zombie_sheet.png" id="2_q6dnt"]
+[ext_resource type="PackedScene" uid="uid://cb77xmjfhtbxk" path="res://Scenes/Projectile.tscn" id="3_q6dnt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7dri"]
+atlas = ExtResource("2_q6dnt")
+region = Rect2(0, 0, 96, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvgbn"]
+atlas = ExtResource("2_q6dnt")
+region = Rect2(288, 0, 96, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a5knh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7dri")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvgbn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l6mkf"]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_6kx4e")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a5knh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_l6mkf")
+
+[node name="RigidBody2D" parent="." instance=ExtResource("3_q6dnt")]
+position = Vector2(99, 71)

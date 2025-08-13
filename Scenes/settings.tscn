@@ -52,6 +52,20 @@ theme_override_fonts/font = ExtResource("4_aaqfp")
 theme_override_font_sizes/font_size = 65
 text = "Settings"
 
+[node name="Info" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -147.5
+offset_top = 355.152
+offset_right = 147.5
+offset_bottom = 438.152
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_aaqfp")
+theme_override_font_sizes/font_size = 20
+text = "Every section has its own obstacle"
+
 [node name="MSC&SFX" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 446.672

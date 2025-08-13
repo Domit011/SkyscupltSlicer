@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://qnpqn1185un"]
+
+[ext_resource type="Script" uid="uid://birgik37skaj4" path="res://Scripts/section.gd" id="1_j6rup"]
+[ext_resource type="Texture2D" uid="uid://djtcvxp50eene" path="res://Sprites/backgrounds/New Piskel-1.png.png" id="1_p6gfx"]
+
+[node name="Safe_Section" type="Node2D"]
+script = ExtResource("1_j6rup")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(576.5, 323.5)
+scale = Vector2(8.99219, 5.05469)
+texture = ExtResource("1_p6gfx")
+
+[node name="VisibilityNotifier" type="VisibleOnScreenNotifier2D" parent="."]
