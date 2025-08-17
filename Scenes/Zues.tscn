@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dqv7mbhrs2t81"]
 
-[ext_resource type="Script" uid="uid://n1ylk6ydckw4" path="res://Shooting_enemy.gd" id="1_6kx4e"]
+[ext_resource type="Script" uid="uid://n1ylk6ydckw4" path="res://Scripts/Shooting_enemy.gd" id="1_6kx4e"]
 [ext_resource type="Texture2D" uid="uid://bsfaeyyq0yafn" path="res://Sprites/npc/Zombie/Tilesheet/character_zombie_sheet.png" id="2_q6dnt"]
 [ext_resource type="PackedScene" uid="uid://cb77xmjfhtbxk" path="res://Scenes/Projectile.tscn" id="3_q6dnt"]
 

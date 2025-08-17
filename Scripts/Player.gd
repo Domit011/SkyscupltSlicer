@@ -15,6 +15,13 @@ var current_upward_speed: float = 100.0
 # Signal for item delivery
 signal item_delivered
 
+# FIX: Single delivery flag - only deliver once per zone visit
+var has_delivered_in_current_zone: bool = false
+var current_delivery_zone: Area2D = null
+
+# FIX: Track ALL collision shapes that are in drop-off zones
+var collision_shapes_in_dropoff: int = 0
+
 func _ready() -> void:
 	print("Player Position:  " , global_position,"   " ,position)
 	# Debug prints to find the game manager
@@ -35,6 +42,11 @@ func _ready() -> void:
 		if not hit_box.area_entered.is_connected(_on_hit_box_area_entered):
 			hit_box.area_entered.connect(_on_hit_box_area_entered)
 			print("✅ Connected area_entered signal")
+		
+		# FIX: Also connect area_exited to properly track when player leaves zones
+		if not hit_box.area_exited.is_connected(_on_hit_box_area_exited):
+			hit_box.area_exited.connect(_on_hit_box_area_exited)
+			print("✅ Connected area_exited signal")
 		
 		if not hit_box.body_entered.is_connected(_on_hit_box_body_entered):
 			hit_box.body_entered.connect(_on_hit_box_body_entered)
@@ -136,6 +148,7 @@ func find_game_manager() -> void:
 			return
 
 func _physics_process(delta: float) -> void:
+	
 	# Update speed based on current inventory (but only every few frames for performance)
 	# Check every 10 frames instead of every frame
 	if Engine.get_process_frames() % 10 == 0:
@@ -206,6 +219,25 @@ func _on_hit_box_body_entered(body: Node2D) -> void:
 		else:
 			print("❌ Still couldn't find game_manager!")
 
+# FIX: Track collision shapes entering/exiting drop-off zones
+func _on_hit_box_area_exited(area: Area2D) -> void:
+	print("🚪 Hit box area collision EXITED with: ", area.name)
+	
+	# Check if this was a drop-off zone
+	for group in area.get_groups():
+		if group == "DropOff":
+			collision_shapes_in_dropoff -= 1
+			collision_shapes_in_dropoff = max(0, collision_shapes_in_dropoff)  # Prevent negative values
+			
+			print("📊 Collision shapes still in drop-off: ", collision_shapes_in_dropoff)
+			
+			# Only reset delivery flag when ALL collision shapes have exited drop-off zones
+			if collision_shapes_in_dropoff == 0:
+				has_delivered_in_current_zone = false
+				current_delivery_zone = null
+				print("✅ Player completely exited drop-off zones - delivery flag reset")
+			break
+
 func _on_hit_box_area_entered(area: Area2D) -> void:
 	print("🎯 Hit box area collision detected with: ", area.name)
 	print("🎯 Area groups: ", area.get_groups())
@@ -217,6 +249,18 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 		print("🔍 Checking group: ", group)
 		if group == "DropOff":
 			print("📦 CONFIRMED: Collided with drop-off zone!")
+			
+			# FIX: Track collision shapes entering drop-off zones
+			collision_shapes_in_dropoff += 1
+			print("📊 Collision shapes in drop-off: ", collision_shapes_in_dropoff)
+			
+			# FIX: Only process delivery if we haven't already delivered in this zone visit
+			if has_delivered_in_current_zone:
+				print("⚠️ Already delivered in current zone visit, skipping...")
+				break
+			
+			# FIX: Mark this zone as current delivery zone
+			current_delivery_zone = area
 			
 			# Force find game manager every time to be sure
 			var gm = null
@@ -283,10 +327,18 @@ func _on_hit_box_area_entered(area: Area2D) -> void:
 				# THE CRITICAL MOMENT: Check if player has items to deliver
 				if inventory_size > 0:
 					print("🚀 SUCCESS: Player has ", inventory_size, " items! Emitting delivery signal...")
+					
+					# FIX: Mark that we've delivered in this zone visit
+					has_delivered_in_current_zone = true
+					print("🔒 Set delivery flag - no more deliveries until player exits completely")
+					
 					item_delivered.emit()
 				else:
 					print("❌❌❌ NO ITEMS TO DELIVER! ❌❌❌")
 					print("💀💀💀 GAME OVER - Empty inventory delivery attempt! 💀💀💀")
+					
+					# FIX: Still mark as delivered to prevent multiple game over calls
+					has_delivered_in_current_zone = true
 					
 					# Multiple attempts to call game over
 					if gm.has_method("game_over"):

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://fh77cctlbilj"]
 
-[ext_resource type="Script" uid="uid://dgla5ih03tkqs" path="res://Kratos.gd" id="1_xke7o"]
+[ext_resource type="Script" uid="uid://dgla5ih03tkqs" path="res://Scripts/Kratos.gd" id="1_xke7o"]
 [ext_resource type="Texture2D" uid="uid://b4b0tpyfrsml3" path="res://Sprites/Obstacles/Kratos.png" id="2_sjvqs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mhcpg"]

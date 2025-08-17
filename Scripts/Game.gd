@@ -6,6 +6,9 @@ var has_item = false
 var score: float = 0.0
 var is_game_over: bool = false
 
+# FIX: Add delivery processing flag to prevent multiple rapid deliveries
+var is_processing_delivery: bool = false
+
 # Node references (assign these in the editor or code)
 @onready var player: CharacterBody2D = $Player
 @onready var obstacle: Area2D = $Obstacle
@@ -171,8 +174,19 @@ func add_item_to_inventory(item_name: String) -> bool:
 func _on_item_delivered() -> void:
 	"""Called when player enters a drop-off zone"""
 	print("🔔 _on_item_delivered() function called!")
+	
+	# FIX: Prevent multiple rapid deliveries by checking if we're already processing one
+	if is_processing_delivery:
+		print("⚠️ Already processing a delivery, ignoring duplicate signal...")
+		return
+	
+	# FIX: Set the processing flag to prevent concurrent deliveries
+	is_processing_delivery = true
+	print("🔒 Set delivery processing flag to prevent duplicates")
+	
 	print("📦 Current inventory size: ", player_inventory.size())
 	print("📦 Current inventory contents: ", player_inventory)
+	
 	if player_inventory.size() > 0:
 		# Check if inventory was full before delivery
 		var was_inventory_full = (player_inventory.size() == max_inventory_size)
@@ -205,6 +219,11 @@ func _on_item_delivered() -> void:
 			print("🎯 Generating new sequence after delivery!")
 			input_array.clear()
 			generate_random_sequence(sequence_length)
+	
+	# FIX: Add a small delay before resetting the processing flag to prevent rapid re-triggering
+	await get_tree().create_timer(0.1).timeout
+	is_processing_delivery = false
+	print("🔓 Reset delivery processing flag")
 
 func update_pattern_list() -> void:
 	"""Update the visual pattern display"""
@@ -256,6 +275,8 @@ func reset_game() -> void:
 	is_game_over = false
 	is_crafting_active = true
 	tile_vis = true  # Show tiles when game is active
+	# FIX: Reset delivery processing flag
+	is_processing_delivery = false
 	player_inventory.clear()
 	input_array.clear()
 	current_craft_request.clear()  # Ensure craft request is cleared
@@ -317,6 +338,8 @@ func game_over() -> void:
 	is_game_over = true
 	tile_vis = false  # Changed to false since we're hiding tiles
 	is_crafting_active = false
+	# FIX: Reset delivery processing flag on game over
+	is_processing_delivery = false
 	
 	# Hide tile graphics when game is over
 	set_tile_graphics_visibility(false)
