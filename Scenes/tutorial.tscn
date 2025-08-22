@@ -1,0 +1,120 @@
+[gd_scene load_steps=19 format=3 uid="uid://dt1qg42r47jaj"]
+
+[ext_resource type="Script" uid="uid://bfcx5etnalomd" path="res://Scripts/tutorial.gd" id="1_omtrn"]
+[ext_resource type="Texture2D" uid="uid://cv7k6bj3kdg8s" path="res://Sprites/backgrounds/ChatGPT Image Jul 28, 2025, 12_56_03 PM.png" id="2_i6t4g"]
+[ext_resource type="FontFile" uid="uid://kg0po8tplc6" path="res://Fonts/realbun/Realbun.otf" id="3_p8jf4"]
+[ext_resource type="VideoStream" uid="uid://qwtkc4mw4psk" path="res://Videos/Recording 2025-08-22 145201.ogv" id="4_i6t4g"]
+[ext_resource type="Texture2D" uid="uid://djb6ginmrtluu" path="res://Sprites/Icons/Tiles (Black)/tile_0133.png" id="5_p1f1o"]
+[ext_resource type="Script" uid="uid://c21lvopg4ndt3" path="res://Scripts/back_button.gd" id="6_ys4pu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p1f1o"]
+texture = ExtResource("2_i6t4g")
+modulate_color = Color(0.779291, 0.779291, 0.779291, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2ono"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_on4kn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_70gml"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8va2t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8mnmb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_koko0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lsb8r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ap3ea"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t6ver"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2nb4t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jb51l"]
+
+[node name="Tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_omtrn")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_p1f1o")
+
+[node name="Tutorial1" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -545.0
+offset_top = -148.0
+offset_right = 114.0
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 0
+theme_override_fonts/font = ExtResource("3_p8jf4")
+theme_override_font_sizes/font_size = 31
+text = "Craft And Deliver To Increase Your Score"
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+offset_left = 744.0
+offset_top = 420.0
+offset_right = 1324.0
+offset_bottom = 786.0
+scale = Vector2(0.44, 0.44)
+stream = ExtResource("4_i6t4g")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 29.0
+offset_bottom = 24.0
+scale = Vector2(4.54591, 4.54591)
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h2ono")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_on4kn")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_70gml")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8va2t")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8mnmb")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_koko0")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_lsb8r")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ap3ea")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_t6ver")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_2nb4t")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jb51l")
+icon = ExtResource("5_p1f1o")
+flat = true
+script = ExtResource("6_ys4pu")
+
+[node name="Hover" type="Label" parent="."]
+layout_mode = 0
+offset_left = 474.0
+offset_top = 64.0
+offset_right = 670.0
+offset_bottom = 87.0
+theme_override_fonts/font = ExtResource("3_p8jf4")
+text = "Hover over tutorial text"
+
+[connection signal="mouse_entered" from="Tutorial1" to="." method="_on_tutorial_mouse_entered"]
+[connection signal="mouse_exited" from="Tutorial1" to="." method="_on_tutorial_1_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Button" to="VBoxContainer/Button" method="_on_pressed"]
